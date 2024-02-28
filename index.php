@@ -11,8 +11,13 @@
         <h1>Wordle</h1>
     </header>
     <div class="content">
-        <div class="griglia" id="griglia">
+        <div class="griglia-content">
+            <div class="griglia-griglia" id="griglia-griglia">
+            
+            </div>
+            <div class="griglia-btn">
 
+            </div>
         </div>
         <div class="words" id="words">
 
