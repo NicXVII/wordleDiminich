@@ -9,7 +9,10 @@ $data = json_decode($json, true);
 header('Content-Type: application/json'); // Imposta l'header Content-Type a JSON
 
 if(true) {
-    $word = $data['word'];
+
+    $numeroCasuale = rand(0, 192);
+    //echo $numeroCasuale;
+
    /* $db;
 
     if (!$db) {
@@ -21,9 +24,7 @@ if(true) {
         //$word = "andrea";
         $result = [
             'success'    =>  true,
-            'data'   =>  1,
-            'word' => $word,
-
+            'id'   =>  $numeroCasuale,
         ];
         //$query = "CALL testVocabolario('$word')";
         /*$statement = mysqli_prepare($db, $query);

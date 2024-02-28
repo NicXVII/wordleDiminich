@@ -1,24 +1,25 @@
+var paroleUsate = [];
+
 document.addEventListener("DOMContentLoaded", function() {
     createGriglia();
+    unsetReadOnly(0);
 });
-
 //------------------------------------------------------------------------------------------------------
 
-function createBtn(index)
-{
-    /*var div = document.getElementById("griglia-btn");*/
+function createBtn(index) {
     var div = document.createElement("div");
     div.classList.add("griglia-btn");
-    var divMAdre = document.getElementById("griglia-griglia");
+    var divMadre = document.getElementById("griglia-griglia");
     var btn = document.createElement('button');
-    btn.id = index+"btn"
-    btn.addEventListener("click", function(){
-        //console.log(btn.id);
-        //fetchWord(index);
+    btn.id = index + "btn";
+    btn.addEventListener("click", function() {
+        //btn.disabled = true; // Disabilita il pulsante quando viene cliccato
+        fetchWord(index);
     });
     div.appendChild(btn);
-    divMAdre.appendChild(div);
+    divMadre.appendChild(div);
 }
+
 
 function fetchWord(id)
 {
@@ -34,11 +35,16 @@ function fetchWord(id)
             word+=letter;
     }
     console.log(word);
-    fetchVocabolario(word);
+    if(word.length != 5)
+        return;
+
+    var btn = document.getElementById(id+"btn");
+    btn.disabled = true;
+    fetchVocabolario(word,id);
     //implementa logica fetching
 }
 
-function fetchVocabolario(word) {
+function fetchVocabolario(word,id) {
     const data = {
         word: word,
     };
@@ -58,6 +64,14 @@ function fetchVocabolario(word) {
     .then(data => {
         if (data.success) {
             console.log(data.data);
+            if(data.data == 1)
+            {
+
+                paroleUsate.push(data.word);
+                console.log(paroleUsate); 
+                setReadOnly(id);
+                unsetReadOnly(id+1);               
+            }
             //populate(data.data);
         } else {
             console.log('La richiesta non ha avuto successo');
@@ -67,6 +81,28 @@ function fetchVocabolario(word) {
     .catch(error => {
         console.error('Si è verificato un errore:', error);
     });
+}
+
+function setReadOnly(id)
+{
+    if(id==5)
+    return;
+
+    for(var index = 0; index < 4;index++)
+    {
+        //console.log(id + "" + index);
+        var input = document.getElementById(id + "" + index);
+        input.setAttribute('readonly', 'readonly');
+    }
+}
+
+function unsetReadOnly(id) 
+{
+    for (var index = 0; index < 4; index++) 
+    {
+        var input = document.getElementById(id + "" + index);
+        input.removeAttribute('readonly');
+    }
 }
 
 
@@ -89,7 +125,12 @@ function createGriglia()
             riga.appendChild(input);
         }
         div.appendChild(riga);
+        setReadOnly(index);
+
         createBtn(index);
 
     }
+
+//------------------------------------------------------------------------------------------------------
+
 }
