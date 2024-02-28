@@ -21,3 +21,64 @@ body{
     justify-content: center;
     align-items: center;
 }
+
+
+/* =================================================================*/
+
+
+#griglia-griglia {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.griglia-btn {
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 10px; /* Aggiungi un margine per separare i bottoni dalle caselle di input */
+}
+
+.riga {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 10px; /* Aggiungi margine inferiore per separare le righe */
+}
+
+input {
+    width: 30px; /* Imposta la larghezza desiderata per gli input */
+    margin-right: 5px; /* Aggiungi margine destro per separare le caselle di input */
+}
+
+
+.griglia-griglia div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc; /* Bordo grigio */
+    height: 50px; /* Altezza fissa */
+}
+
+.griglia-griglia input {
+    width: 100%; /* Occupa tutto lo spazio disponibile */
+    height: 100%; /* Occupa tutta l'altezza disponibile */
+    text-align: center; /* Testo centrato */
+}
+
+.griglia-btn button {
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    margin-left: 15%;
+    width: 100%;
+    height: 40px;
+    margin-bottom: 5px; /* Spazio tra i pulsanti */
+    background-color: #007bff; /* Colore di sfondo */
+    color: #fff; /* Colore del testo */
+    border: none;
+    cursor: pointer;
+}
+
+.griglia-btn button:hover {
+    background-color: #0056b3; /* Cambia colore al passaggio del mouse */
+}

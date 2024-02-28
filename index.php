@@ -15,7 +15,6 @@
             <div class="griglia-griglia" id="griglia-griglia">
             
             </div>
-            <div class="griglia-btn">
 
             </div>
         </div>
