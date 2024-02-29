@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +26,9 @@
 
         </div>
     </div>
-
+    <div class="wordUsed" id="wordUsed">
+        
+    </div>
     <?php
      //require_once('components/keyboard.php')
     ?>

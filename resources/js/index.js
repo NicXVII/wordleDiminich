@@ -1,5 +1,5 @@
 var paroleUsate = [];
-
+var lettereUsate = [];
 document.addEventListener("DOMContentLoaded", function() {
     createGriglia();
     unsetReadOnly(0);
@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 //------------------------------------------------------------------------------------------------------
 
-function createBtn(index) {
+/*function createBtn(index) {
     var div = document.createElement("div");
     div.classList.add("griglia-btn");
     var divMadre = document.getElementById("griglia-griglia");
@@ -19,12 +19,16 @@ function createBtn(index) {
     });
     div.appendChild(btn);
     divMadre.appendChild(div);
-}
+}*/
 
+
+//------------------------------------------------------------------------------------------------------
 
 function fetchWord(id)
 {
 
+
+    var noWhiteSpaces = true;
     //console.log("Fecthing word");
     var word = "";
 
@@ -32,23 +36,62 @@ function fetchWord(id)
     {
         //console.log(id+""+index);
         var letter = document.getElementById(id+""+index).value;
+        if (letter == "")
+        {
+            noWhiteSpaces = false;
+            return;
+        }
         if(letter != undefined)
             word+=letter;
     }
+    addLettereUSate();
+    sort();
+    printLetereUsate();
     console.log(word);
     if(word.length != 5)
         return;
 
     /*var btn = document.getElementById(id+"btn");
     btn.disabled = true;*/
-    fetchAll(word,id);
+    if (noWhiteSpaces)
+        fetchAll(word,id);
 }
 
+
+function printLetereUsate()
+{
+    var div = document.getElementById('wordUsed');
+    div.innerHTML = '';
+
+
+    div.innerHTML = lettereUsate
+}
 function fetchAll(word,id)
 {
+
     fetchVocabolario(word,id);
     fetchCaratteri(word,id);
     fetchParola(word,id);
+
+}
+
+function addLettereUSate()
+{
+    paroleUsate.forEach(function(parola) {
+        for (var i = 0; i < parola.length; i++) {
+            var lettera = parola[i];
+            if (!lettereUsate.includes(lettera)) {
+                lettereUsate.push(lettera);
+            }
+        }
+    });
+
+}
+
+function sort()
+{
+    paroleUsate.sort();
+lettereUsate.sort();
 }
 
 function fetchVocabolario(word,id) {
@@ -89,6 +132,7 @@ function fetchVocabolario(word,id) {
         console.error('Si è verificato un errore:', error);
     });
 }
+//------------------------------------------------------------------------------------------------------
 function setReadOnly(id) {
     if (id == 5) {
         return;
@@ -263,12 +307,15 @@ function addListenerInput(input, index) {
             var nextpost = pos + 1;
             var nextInput = document.getElementById(index + "" + nextpost); 
             if (nextInput !== null) { 
+
                 nextInput.focus();
             }
         } else {
             fetchWord(parseInt(index));
+
             if(index < 5)
             {
+
             var nextInput = document.getElementById((parseInt(index) + 1) + "" + 0); 
             
             nextInput.focus();
