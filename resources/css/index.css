@@ -1,4 +1,4 @@
-body{
+body {
     width: 100%;
     height: 100%;
     margin: 0%;
@@ -7,84 +7,65 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: #f6f6f6; /* Colore di sfondo simile a Wordle */
 }
 
-.content{
+.content {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 20px; /* Aggiungi margine superiore per spaziatura */
 }
 
-.griglia-content{
+.griglia-content {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 20px; /* Aggiungi margine superiore per spaziatura */
 }
 
-
-/* =================================================================*/
-
-.input-field{
+.input-field {
     width: auto;
 }
-/* =================================================================*/
-
 
 #griglia-griglia {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center; /* Centra le righe della griglia */
+    margin-top: 20px; /* Aggiungi margine superiore per spaziatura */
 }
 
 .griglia-btn {
     display: flex;
-    justify-content: flex-start;
-    margin-left: 10px; /* Aggiungi un margine per separare i bottoni dalle caselle di input */
+    justify-content: center; /* Centra i bottoni nella griglia */
+    margin-top: 10px; /* Aggiungi margine superiore per spaziatura */
 }
 
 .riga {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center; /* Centra gli input nella riga */
     align-items: center;
-    margin-bottom: 10px; /* Aggiungi margine inferiore per separare le righe */
+    margin-bottom: 10px; /* Aggiungi margine inferiore per spaziatura */
 }
 
 input {
-    width: 30px; /* Imposta la larghezza desiderata per gli input */
-    margin-right: 5px; /* Aggiungi margine destro per separare le caselle di input */
+    width: 30px;
+    height: 40px; /* Aumenta l'altezza degli input */
+    margin-right: 5px;
+    text-align: center;
+    border: 1px solid #ccc; /* Aggiungi bordo grigio agli input */
+    background-color: white; /* Sfondo bianco per gli input */
 }
-
 
 .griglia-griglia div {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #ccc; /* Bordo grigio */
-    height: 50px; /* Altezza fissa */
-}
-
-.griglia-griglia input {
-    font-size: 20px;
-    width: 100%; /* Occupa tutto lo spazio disponibile */
-    height: 100%; /* Occupa tutta l'altezza disponibile */
-    text-align: center; /* Testo centrato */
-}
-
-.griglia-btn button {
-    display: flex;
-    justify-content: center;
-    align-items: center;    
-    margin-left: 15%;
-    width: 100%;
-    height: 40px;
-    margin-bottom: 5px; /* Spazio tra i pulsanti */
-    background-color: #007bff; /* Colore di sfondo */
-    color: #fff; /* Colore del testo */
-    border: none;
-    cursor: pointer;
-}
-
-.griglia-btn button:hover {
-    background-color: #0056b3; /* Cambia colore al passaggio del mouse */
+    border: 1px solid #ccc;
+    height: 40px; /* Aumenta l'altezza delle caselle della griglia */
+    width: 30px; /* Larghezza fissa per le caselle della griglia */
+    font-size: 16px; /* Riduci la dimensione del testo per adattarsi meglio */
+    margin: 2px; /* Aggiungi margine tra le caselle della griglia */
+    background-color: white; /* Sfondo bianco per le caselle della griglia */
 }

@@ -3,12 +3,12 @@ session_start();
 //require_once("database.php");
 
 $result = array(); 
-$json = file_get_contents('php://input');
-$data = json_decode($json, true);
+
 
 header('Content-Type: application/json'); // Imposta l'header Content-Type a JSON
 
-if(true) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
 
     $numeroCasuale = rand(0, 192);
     //echo $numeroCasuale;
@@ -22,6 +22,7 @@ if(true) {
         ];
     } else {*/
         //$word = "andrea";
+        $_SESSION['id'] = $numeroCasuale;
         $result = [
             'success'    =>  true,
             'id'   =>  $numeroCasuale,

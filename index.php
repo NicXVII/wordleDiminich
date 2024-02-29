@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diminich || Wordle</title>
     <link rel="stylesheet" href="resources/css/index.css">
+    <link rel="stylesheet" href="resources/css/keyboard.css">
 </head>
 <body>
     <header>
@@ -22,7 +23,12 @@
 
         </div>
     </div>
+
+    <?php
+     //require_once('components/keyboard.php')
+    ?>
 </body>
 </html>
 
 <script src="resources/js/index.js"></script>
+<script src="resources/js/keyboard.js"></script>

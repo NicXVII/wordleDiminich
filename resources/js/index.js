@@ -3,6 +3,7 @@ var paroleUsate = [];
 document.addEventListener("DOMContentLoaded", function() {
     createGriglia();
     unsetReadOnly(0);
+    fetchRandomId();
 });
 //------------------------------------------------------------------------------------------------------
 
@@ -14,7 +15,7 @@ function createBtn(index) {
     btn.id = index + "btn";
     btn.addEventListener("click", function() {
         //btn.disabled = true; // Disabilita il pulsante quando viene cliccato
-        fetchWord(index);
+        //fetchWord(index);
     });
     div.appendChild(btn);
     divMadre.appendChild(div);
@@ -24,7 +25,7 @@ function createBtn(index) {
 function fetchWord(id)
 {
 
-    console.log("Fecthing word");
+    //console.log("Fecthing word");
     var word = "";
 
     for(var index=0;index<5;index++)
@@ -38,10 +39,16 @@ function fetchWord(id)
     if(word.length != 5)
         return;
 
-    var btn = document.getElementById(id+"btn");
-    btn.disabled = true;
+    /*var btn = document.getElementById(id+"btn");
+    btn.disabled = true;*/
+    fetchAll(word,id);
+}
+
+function fetchAll(word,id)
+{
     fetchVocabolario(word,id);
-    //implementa logica fetching
+    fetchCaratteri(word,id);
+    fetchParola(word,id);
 }
 
 function fetchVocabolario(word,id) {
@@ -68,7 +75,7 @@ function fetchVocabolario(word,id) {
             {
 
                 paroleUsate.push(data.word);
-                console.log(paroleUsate); 
+                //console.log(paroleUsate); 
                 setReadOnly(id);
                 unsetReadOnly(id+1);               
             }
@@ -82,27 +89,138 @@ function fetchVocabolario(word,id) {
         console.error('Si è verificato un errore:', error);
     });
 }
+function setReadOnly(id) {
+    if (id == 5) {
+        return;
+    }
 
-function setReadOnly(id)
-{
-    if(id==5)
-    return;
-
-    for(var index = 0; index < 4;index++)
-    {
-        //console.log(id + "" + index);
+    for (var index = 0; index < 4; index++) {
         var input = document.getElementById(id + "" + index);
-        input.setAttribute('readonly', 'readonly');
+        if (input) {
+            input.setAttribute('readonly', 'readonly');
+        }
     }
 }
 
-function unsetReadOnly(id) 
-{
-    for (var index = 0; index < 4; index++) 
-    {
+function unsetReadOnly(id) {
+    for (var index = 0; index < 4; index++) {
         var input = document.getElementById(id + "" + index);
-        input.removeAttribute('readonly');
+        if (input) {
+            input.removeAttribute('readonly');
+        }
     }
+}
+
+//------------------------------------------------------------------------------------------------------
+
+function fetchCaratteri(word,id) {
+    const data = {
+        word: word,
+        id  : id,
+    };
+    fetch('function/testCaratteri.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data) 
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); 
+    })
+    .then(data => {
+        if (data.success) {
+            console.log(data.data);
+            /*if(data.data == 1)
+            {
+
+                paroleUsate.push(data.word);
+                console.log(paroleUsate); 
+                setReadOnly(id);
+                unsetReadOnly(id+1);               
+            }*/
+            //populate(data.data);
+        } else {
+            console.log('La richiesta non ha avuto successo');
+            //popUp("Non sono stati trovati elementi");
+        }
+    })
+    .catch(error => {
+        console.error('Si è verificato un errore:', error);
+    });
+}
+
+
+
+function fetchParola(word,id) {
+    const data = {
+        word: word,
+        id  : id,
+    };
+    fetch('function/testCaratteri.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data) 
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); 
+    })
+    .then(data => {
+        if (data.success) {
+            console.log(data.data);
+            /*if(data.data == 1)
+            {
+
+                paroleUsate.push(data.word);
+                console.log(paroleUsate); 
+                setReadOnly(id);
+                unsetReadOnly(id+1);               
+            }*/
+            //populate(data.data);
+        } else {
+            console.log('La richiesta non ha avuto successo');
+            //popUp("Non sono stati trovati elementi");
+        }
+    })
+    .catch(error => {
+        console.error('Si è verificato un errore:', error);
+    });
+}
+
+
+function fetchRandomId() {
+
+    fetch('function/getRandomId.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); 
+    })
+    .then(data => {
+        if (data.success) {
+            console.log(data.id);
+        } else {
+            console.log('La richiesta non ha avuto successo');
+            //popUp("Non sono stati trovati elementi");
+        }
+    })
+    .catch(error => {
+        console.error('Si è verificato un errore:', error);
+    });
 }
 
 
@@ -129,28 +247,35 @@ function createGriglia()
         }
         div.appendChild(riga);
         setReadOnly(index);
-        createBtn(index);
+        //createBtn(index);
 
     }
 }
-
-function addListenerInput(input,index) {
+function addListenerInput(input, index) {
     input.addEventListener('keyup', (event) => {
-        console.log("Tasto alzato");
-        console.log(input.getAttribute('position'));
-        var pos = parseInt(input.getAttribute('position')); 
-        if (pos < 4) 
-        { 
-            console.log("Entrato if");
-            
-            var nextpost = pos + 1;
+        var pos = parseInt(input.getAttribute('position'));
+        
+        // Verifica se il tasto premuto è una lettera dell'alfabeto
+        if (event.keyCode < 65 || event.keyCode > 90) 
+            return;
 
-            var nextInput = document.getElementById(index+"" + nextpost); 
+        if (pos < 4) { 
+            var nextpost = pos + 1;
+            var nextInput = document.getElementById(index + "" + nextpost); 
             if (nextInput !== null) { 
                 nextInput.focus();
+            }
+        } else {
+            fetchWord(parseInt(index));
+            if(index < 5)
+            {
+            var nextInput = document.getElementById((parseInt(index) + 1) + "" + 0); 
+            
+            nextInput.focus();
             }
         }
     });
 }
+
 
 

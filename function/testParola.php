@@ -8,8 +8,8 @@ $data = json_decode($json, true);
 
 header('Content-Type: application/json'); // Imposta l'header Content-Type a JSON
 
-if(true) {
-   /* $db;
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    /* $db;
 
     if (!$db) {
         $result = [
