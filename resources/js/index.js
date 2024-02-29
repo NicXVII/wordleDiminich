@@ -1,5 +1,6 @@
 var paroleUsate = [];
 var lettereUsate = [];
+var lettereGiuste = [];
 document.addEventListener("DOMContentLoaded", function() {
     createGriglia();
     unsetReadOnly(0);
@@ -22,11 +23,11 @@ document.addEventListener("DOMContentLoaded", function() {
 }*/
 
 
+
 //------------------------------------------------------------------------------------------------------
 
 function fetchWord(id)
 {
-
 
     var noWhiteSpaces = true;
     //console.log("Fecthing word");
@@ -47,6 +48,7 @@ function fetchWord(id)
     addLettereUSate();
     sort();
     printLetereUsate();
+    removeLettereUSate();
     console.log(word);
     if(word.length != 5)
         return;
@@ -60,11 +62,18 @@ function fetchWord(id)
 
 function printLetereUsate()
 {
+   /* var div = document.getElementById('wordUsed');
+    div.innerHTML = '';
+
+
+    div.innerHTML = lettereGiuste;*/
+
+
     var div = document.getElementById('wordUsed');
     div.innerHTML = '';
 
 
-    div.innerHTML = lettereUsate
+    div.innerHTML = lettereUsate;
 }
 function fetchAll(word,id)
 {
@@ -85,13 +94,43 @@ function addLettereUSate()
             }
         }
     });
-
 }
 
+function removeLettereUSate() {
+    console.log("LEttere giuste "+ lettereGiuste);
+    console.log("LEttere  "+ lettereUsate);
+
+    for (var i = 0; i < lettereGiuste.length; i++) {
+        var lettera = lettereGiuste[i];
+        if (lettereUsate.includes(lettera)) {
+            console.log("removing "+ lettera);
+            var index = lettereUsate.indexOf(lettera);
+            //console.log(lettera);
+            if (index !== -1) {
+                lettereUsate.splice(index, 1);
+            }
+        }
+    }
+    console.log("After removal: "+ lettereUsate);
+}
+
+
+function addLettereGiuste(word)
+{
+    for(var i = 0; i< word.length; i++)
+    {
+        var lettera = word[i];
+        if(!lettereGiuste.includes(lettera))
+        {
+            lettereGiuste.push(lettera);
+        }
+    }
+}
 function sort()
 {
     paroleUsate.sort();
-lettereUsate.sort();
+    lettereUsate.sort();
+    lettereGiuste.sort();
 }
 
 function fetchVocabolario(word,id) {
@@ -134,9 +173,7 @@ function fetchVocabolario(word,id) {
 }
 //------------------------------------------------------------------------------------------------------
 function setReadOnly(id) {
-    if (id == 5) {
-        return;
-    }
+
 
     for (var index = 0; index < 4; index++) {
         var input = document.getElementById(id + "" + index);
@@ -204,7 +241,7 @@ function fetchParola(word,id) {
         word: word,
         id  : id,
     };
-    fetch('function/testCaratteri.php', {
+    fetch('function/testParola.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -219,7 +256,9 @@ function fetchParola(word,id) {
     })
     .then(data => {
         if (data.success) {
-            console.log(data.data);
+            //console.log(data.data);
+            //console.log(data.letters);
+           addLettereGiuste(data.letters);
             /*if(data.data == 1)
             {
 

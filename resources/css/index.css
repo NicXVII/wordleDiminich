@@ -10,6 +10,16 @@ body {
     background-color: #f6f6f6; /* Colore di sfondo simile a Wordle */
 }
 
+/* Definizione del colore per la classe .green */
+.green {
+    color: green;
+}
+
+/* Definizione del colore per la classe .ocra */
+.ocra {
+    color: #c68e56; /* Questo è solo un esempio di un tono di colore ocra */
+}
+
 .content {
     display: flex;
     flex-direction: column;

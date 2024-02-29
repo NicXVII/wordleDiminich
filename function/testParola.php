@@ -6,7 +6,7 @@ $result = array();
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 
-header('Content-Type: application/json'); // Imposta l'header Content-Type a JSON
+header('Content-Type: application/json'); // Set the Content-Type header to JSON
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     /* $db;
@@ -18,33 +18,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ];
     } else {*/
         //$word = "andrea";
+        $word = "andrea"; // Assuming $word is defined elsewhere
+        $result = '10111';
+        $rightLetters = checkWordPresents($word, $result);
+
         $result = [
             'success'    =>  true,
-            'data'   =>  10111,
+            'data'   =>   $result,
+            'letters' => $rightLetters
         ];
-        //$query = "CALL testVocabolario('$word')";
-        /*$statement = mysqli_prepare($db, $query);
+    /*}*/ // The commented else block seems unnecessary
 
-
-        if ($statement) {
-            mysqli_stmt_execute($statement);
-            $data = mysqli_stmt_get_result($statement);
-            mysqli_stmt_close($statement);
-
-            $result = [
-                'success'    =>  true,
-                'data'   =>  $data,
-            ];
-        } else {
-            $result = [
-                'success'    =>  false,
-                'message'   =>  'Query execution failed',
-            ];
-        }*/
-
-        //mysqli_close($db);
-    }
-/*}*/ else {
+} else {
     $result = [
         'success'    =>  false,
         'message'   =>  'Word not provided',
@@ -52,3 +37,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 echo json_encode($result);
+
+function checkWordPresents($word, $results)
+{
+    $wordPresents= array();
+
+    for($i = 0; $i < 5; $i++) 
+    {
+        if($results[$i] === '1')
+        {
+            $wordPresents[] = $word[$i];
+        }
+    }
+    return $wordPresents;
+}
