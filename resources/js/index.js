@@ -120,17 +120,37 @@ function createGriglia()
             var input = document.createElement('input');
             input.type = 'text';
             input.maxLength = 1;
+            input.classList.add('input-field');
             input.id = index + ""+ position;
+            input.setAttribute('position', position);
             //input.classList.add('inputElement');
+            addListenerInput(input,index);
             riga.appendChild(input);
         }
         div.appendChild(riga);
         setReadOnly(index);
-
         createBtn(index);
 
     }
-
-//------------------------------------------------------------------------------------------------------
-
 }
+
+function addListenerInput(input,index) {
+    input.addEventListener('keyup', (event) => {
+        console.log("Tasto alzato");
+        console.log(input.getAttribute('position'));
+        var pos = parseInt(input.getAttribute('position')); 
+        if (pos < 4) 
+        { 
+            console.log("Entrato if");
+            
+            var nextpost = pos + 1;
+
+            var nextInput = document.getElementById(index+"" + nextpost); 
+            if (nextInput !== null) { 
+                nextInput.focus();
+            }
+        }
+    });
+}
+
+
