@@ -11,6 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
     $numeroCasuale = rand(0, 192);
+
+   $_SESSION['parolaDaCercare'] = 'kanye';
+
+
+
+    //$_SESSION['word'] = $word;
     //echo $numeroCasuale;
 
    /* $db;

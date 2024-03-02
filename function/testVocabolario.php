@@ -53,6 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'word' => $word,
         ];
 
+        
+
 
 
     } else {

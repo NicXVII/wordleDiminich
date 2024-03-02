@@ -6,8 +6,6 @@
         $_SESSION['lettereUsate']   = array(); 
         $_SESSION['letteeGiuste']   = array(); 
     }
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

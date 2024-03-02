@@ -10,6 +10,8 @@ header('Content-Type: application/json'); // Imposta l'header Content-Type a JSO
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $word = $data['word'];
+    $wordToFind = $_SESSION['parolaDaCercare'];
+
    /* $db;
 
     if (!$db) {
@@ -54,3 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 echo json_encode($result);
+
+
+function confrontWord($word, $wordToFind)
+{
+    
+}

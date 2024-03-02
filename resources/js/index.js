@@ -1,26 +1,13 @@
 var paroleUsate = [];
 var lettereUsate = [];
 var lettereGiuste = [];
+var positions = [];
 document.addEventListener("DOMContentLoaded", function() {
     createGriglia();
     unsetReadOnly(0);
     fetchRandomId();
 });
 //------------------------------------------------------------------------------------------------------
-
-/*function createBtn(index) {
-    var div = document.createElement("div");
-    div.classList.add("griglia-btn");
-    var divMadre = document.getElementById("griglia-griglia");
-    var btn = document.createElement('button');
-    btn.id = index + "btn";
-    btn.addEventListener("click", function() {
-        //btn.disabled = true; // Disabilita il pulsante quando viene cliccato
-        //fetchWord(index);
-    });
-    div.appendChild(btn);
-    divMadre.appendChild(div);
-}*/
 
 
 
@@ -50,7 +37,7 @@ function fetchWord(id)
     return;
 
 
-    console.log(word);
+    //console.log(word);
 
 
     /*var btn = document.getElementById(id+"btn");
@@ -79,15 +66,16 @@ function printLettereUsate() {
 
 function fetchAll(word,id)
 {
-    console.log("Fetching all word");
+    /*console.log("Fetching all word");
     console.log("Parole usate" + paroleUsate);
     console.log("Lettere usate" + lettereUsate);
-    console.log("LEttere Giuste" + lettereGiuste);
+    console.log("LEttere Giuste" + lettereGiuste);*/
 
 
     fetchVocabolario(word,id);
-    fetchCaratteri(word,id);
     fetchParola(word,id);
+
+    fetchCaratteri(word,id);
     workWithWords();
 
 }
@@ -114,8 +102,8 @@ function addLettereUSate()
 }
 
 function removeLettereUSate() {
-    console.log("LEttere giuste "+ lettereGiuste);
-    console.log("LEttere  "+ lettereUsate);
+    /*console.log("LEttere giuste "+ lettereGiuste);
+    console.log("LEttere  "+ lettereUsate);*/
 
     for (var i = 0; i < lettereGiuste.length; i++) {
         var lettera = lettereGiuste[i];
@@ -128,7 +116,7 @@ function removeLettereUSate() {
             }
         }
     }
-    console.log("After removal: "+ lettereUsate);
+    //console.log("After removal: "+ lettereUsate);
     printLettereUsate();
 }
 
@@ -170,7 +158,7 @@ function fetchVocabolario(word,id) {
     })
     .then(data => {
         if (data.success) {
-            console.log(data.data);
+            //console.log(data.data);
             if(data.data == 1)
             {
 
@@ -232,7 +220,7 @@ function fetchCaratteri(word,id) {
     })
     .then(data => {
         if (data.success) {
-            console.log(data.data);
+            //console.log(data.data);
             /*if(data.data == 1)
             {
 
@@ -274,9 +262,11 @@ function fetchParola(word,id) {
     })
     .then(data => {
         if (data.success) {
-            //console.log(data.data);
+            console.log(data.positions);
+            positions.splice(0, positions.length);
+            positions.push(data.positions);
             console.log("Lettere giuste:"+data.letters);
-           addLettereGiuste(data.letters);
+            addLettereGiuste(data.letters);
             /*if(data.data == 1)
             {
 
@@ -313,7 +303,7 @@ function fetchRandomId() {
     })
     .then(data => {
         if (data.success) {
-            console.log(data.id);
+            //console.log(data.id);
         } else {
             console.log('La richiesta non ha avuto successo');
             //popUp("Non sono stati trovati elementi");
@@ -377,7 +367,7 @@ function addListenerInput(input, index) {
         if (event.keyCode < 65 || event.keyCode > 90) 
             return;
 
-        colorInputBasedOnLetter(input);
+        //colorInputBasedOnLetter(input);
         if (pos < 4) { 
             var nextpost = pos + 1;
             var nextInput = document.getElementById(index + "" + nextpost); 
@@ -386,7 +376,10 @@ function addListenerInput(input, index) {
                 nextInput.focus();
             }
         } else {
-            fetchWord(parseInt(index));
+            fetchWord(parseInt(index)).then(() => {
+                printColors(index);
+            });
+            //printColors(index);
             //printLetereUsate();
             if(index < 5)
             {
@@ -399,7 +392,34 @@ function addListenerInput(input, index) {
     });
 }
 
+function printColors(index) 
+{
+    
+    console.log("Printing colors...");
+    if(positions[index] === undefined)
+        return;
 
+
+    var pos = positions[index];
+
+    console.log("Pos"+pos);
+
+    for (var i = 0; i < 5; i++) {
+        var input = document.getElementById(index + "" + i);
+        
+        // Check if pos[i] is defined and is equal to 1
+        if (typeof pos[i] === 'number' && pos[i] === 1) {
+            console.log("Green");
+            input.classList.add("green");
+        } else {
+            //console.log("Grey");
+            input.classList.add("grey");
+        }
+    }
+}
+
+
+/*
 function colorInputBasedOnLetter(input) {
     var letter = input.value;
     console.log("colorInputBasedOnLetter " +letter);
@@ -414,7 +434,7 @@ function colorInputBasedOnLetter(input) {
         input.classList.add('green');
     }
 }
-
+*/
 
 
 

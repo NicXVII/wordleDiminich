@@ -19,14 +19,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($data['word'])) {
     } else {*/
         //$word = "andrea";
         //$word = "andrea"; // Assuming $word is defined elsewhere
+        $wordToSearch = $_SESSION['parolaDaCercare'];
         $word = $data['word'];
-        $result = '10111';
-        $rightLetters = checkWordPresents($word, $result);
+        $positions = confrontWord($word, $wordToSearch);
+        $rightLetters = checkWordPresents($word, $positions);
 
         $result = [
-            'success'    =>  true,
-            'data'   =>   $result,
-            'letters' => $rightLetters
+            'success'       =>  true,
+            'data'          =>   $result,
+            'letters'       => $rightLetters,
+            'positions'     => $positions
         ];
     /*}*/ // The commented else block seems unnecessary
 
@@ -39,13 +41,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($data['word'])) {
 
 echo json_encode($result);
 
-function checkWordPresents($word, $results)
+function checkWordPresents($word, $positions)
 {
     $wordPresents= array();
 
     for($i = 0; $i < 5; $i++) 
     {
-        if($results[$i] === '1')
+        if($positions[$i] == '1')
         {
             $wordPresents[] = $word[$i];
         }
@@ -54,3 +56,19 @@ function checkWordPresents($word, $results)
 }
 
 
+function confrontWord($word, $wordToFind)
+{
+    $wordPresents = array();
+    for($i = 0; $i < 5; $i++)
+    {
+        if($word[$i] === $wordToFind[$i])
+        {
+            $wordPresents[] = 1;
+        }
+        else
+        {
+            $wordPresents[] = 0;
+        }
+    }
+    return $wordPresents;
+}
