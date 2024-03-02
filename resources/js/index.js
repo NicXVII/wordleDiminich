@@ -108,6 +108,7 @@ function addLettereUSate()
             }
         }
     });
+    //console.log(lettereUsate);
 }
 
 function removeLettereUSate() {
@@ -170,7 +171,6 @@ function fetchVocabolario(word,id) {
             //console.log(data.data);
             if(data.data == 1)
             {
-
                 paroleUsate.push(data.word);
                 //console.log(paroleUsate); 
                 setReadOnly(id);
@@ -230,7 +230,8 @@ function fetchCaratteri(word,id) {
     .then(data => {
         if (data.success) {
             posCaratteri.push(data.data);
-            console.log("Caratteri " + posCaratteri);
+            workWithWords();
+            //console.log("Caratteri " + posCaratteri);
             //console.log(data.data);
             /*if(data.data == 1)
             {
@@ -276,10 +277,10 @@ function fetchParola(word,index) {
     })
     .then(data => {
         if (data.success) {
-            console.log(data.positions);
+            //console.log(data.positions);
 
             positions.push(data.positions);
-            console.log("Lettere giuste:"+data.letters);
+            //console.log("Lettere giuste:"+data.letters);
             addLettereGiuste(data.letters);
             printColors(index);
             /*if(data.data == 1)
@@ -415,8 +416,8 @@ function printColors(index)
     {
         if(i === index){
             temp = posCaratteri[i];
-            console.log(posCaratteri[i]);
-            console.log(temp);
+            /*console.log(posCaratteri[i]);
+            console.log(temp);*/
         }
 
     }
@@ -446,7 +447,7 @@ function printColors(index)
                 input.classList.add("grey");
             }else
             {
-                console.log("True ");
+                //console.log("True ");
 
 
                 if (typeof temp[i] === 'number' && temp[i] === 1)

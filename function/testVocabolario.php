@@ -9,8 +9,7 @@ header('Content-Type: application/json'); // Set Content-Type header to JSON
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($data['word'])) {
-        $word = "andrea";
-       // $word = $data['word'];
+       $word = $data['word'];
         $trovata = 1;
 
         // Handle database connection if needed
@@ -45,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             mysqli_close($db);
         }
         */
-        addInArray($trovata,$word);
+        /*addInArray($trovata,$word);*/
         // Assuming $trovata is your indicator of success/failure
         $result = [
             'success' => true,
