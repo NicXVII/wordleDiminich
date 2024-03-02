@@ -45,13 +45,13 @@ function fetchWord(id)
         if(letter != undefined)
             word+=letter;
     }
-    addLettereUSate();
-    sort();
-    printLetereUsate();
-    removeLettereUSate();
-    console.log(word);
+
     if(word.length != 5)
-        return;
+    return;
+
+
+    console.log(word);
+
 
     /*var btn = document.getElementById(id+"btn");
     btn.disabled = true;*/
@@ -60,30 +60,47 @@ function fetchWord(id)
 }
 
 
-function printLetereUsate()
-{
-   /* var div = document.getElementById('wordUsed');
-    div.innerHTML = '';
 
-
-    div.innerHTML = lettereGiuste;*/
-
-
+function printLettereUsate() {
     var div = document.getElementById('wordUsed');
     div.innerHTML = '';
 
+    var ul = document.createElement('ul');
+    ul.id = 'usedLettersList';
 
-    div.innerHTML = lettereUsate;
+    for (var i = 0; i < lettereUsate.length; i++) {
+        var li = document.createElement('li');
+        li.textContent = lettereUsate[i];
+        ul.appendChild(li);
+    }
+
+    div.appendChild(ul);
 }
+
 function fetchAll(word,id)
 {
+    console.log("Fetching all word");
+    console.log("Parole usate" + paroleUsate);
+    console.log("Lettere usate" + lettereUsate);
+    console.log("LEttere Giuste" + lettereGiuste);
+
 
     fetchVocabolario(word,id);
     fetchCaratteri(word,id);
     fetchParola(word,id);
+    workWithWords();
 
 }
 
+
+function workWithWords()
+{
+    
+    addLettereUSate();
+    removeLettereUSate();
+    sort();
+    printLettereUsate();
+}
 function addLettereUSate()
 {
     paroleUsate.forEach(function(parola) {
@@ -112,6 +129,7 @@ function removeLettereUSate() {
         }
     }
     console.log("After removal: "+ lettereUsate);
+    printLettereUsate();
 }
 
 
@@ -257,7 +275,7 @@ function fetchParola(word,id) {
     .then(data => {
         if (data.success) {
             //console.log(data.data);
-            //console.log(data.letters);
+            console.log("Lettere giuste:"+data.letters);
            addLettereGiuste(data.letters);
             /*if(data.data == 1)
             {
@@ -305,9 +323,26 @@ function fetchRandomId() {
         console.error('Si è verificato un errore:', error);
     });
 }
+//------------------------------------------------------------------------------------------------------
+
+function confrontInputWithLettere() {
+    var inputs = document.getElementsByClassName('input-field');
+    for (var i = 0; i < inputs.length; i++) {
+        var input = inputs[i];
+        var letter = input.value;
+        if (lettereUsate.includes(letter)) {
+            input.style.color = 'grey';
+        }
+        if (lettereGiuste.includes(letter)) {
+            input.style.color = 'green';
+        }
+    }
+}
+
 
 
 //------------------------------------------------------------------------------------------------------
+
 function createGriglia()
 {
     var div = document.getElementById('griglia-griglia');
@@ -316,6 +351,7 @@ function createGriglia()
         var riga = document.createElement('div');
         //colonna.classList.add('riga');
         riga.id = index + "riga";
+        riga.classList.add('riga');
         for(var position=0; position<5; position++)
         {
             var input = document.createElement('input');
@@ -330,7 +366,6 @@ function createGriglia()
         }
         div.appendChild(riga);
         setReadOnly(index);
-        //createBtn(index);
 
     }
 }
@@ -342,6 +377,7 @@ function addListenerInput(input, index) {
         if (event.keyCode < 65 || event.keyCode > 90) 
             return;
 
+        colorInputBasedOnLetter(input);
         if (pos < 4) { 
             var nextpost = pos + 1;
             var nextInput = document.getElementById(index + "" + nextpost); 
@@ -351,7 +387,7 @@ function addListenerInput(input, index) {
             }
         } else {
             fetchWord(parseInt(index));
-
+            //printLetereUsate();
             if(index < 5)
             {
 
@@ -362,6 +398,24 @@ function addListenerInput(input, index) {
         }
     });
 }
+
+
+function colorInputBasedOnLetter(input) {
+    var letter = input.value;
+    console.log("colorInputBasedOnLetter " +letter);
+
+    if (lettereUsate.includes(letter)) {
+        console.log("Lettere usate " + letter);
+        input.classList.add('grey');
+
+    }
+    if (lettereGiuste.includes(letter)) {
+        console.log("Lettere giuste " + letter);
+        input.classList.add('green');
+    }
+}
+
+
 
 
 

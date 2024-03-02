@@ -1,5 +1,13 @@
 <?php
     session_start();
+    if(!isset($_SESSION['paroleUsate']))
+    {
+        $_SESSION['paroleUsate']    = array(); 
+        $_SESSION['lettereUsate']   = array(); 
+        $_SESSION['letteeGiuste']   = array(); 
+    }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

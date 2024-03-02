@@ -8,7 +8,7 @@ $data = json_decode($json, true);
 
 header('Content-Type: application/json'); // Set the Content-Type header to JSON
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($data['word'])) {
     /* $db;
 
     if (!$db) {
@@ -18,7 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ];
     } else {*/
         //$word = "andrea";
-        $word = "andrea"; // Assuming $word is defined elsewhere
+        //$word = "andrea"; // Assuming $word is defined elsewhere
+        $word = $data['word'];
         $result = '10111';
         $rightLetters = checkWordPresents($word, $result);
 
@@ -51,3 +52,5 @@ function checkWordPresents($word, $results)
     }
     return $wordPresents;
 }
+
+

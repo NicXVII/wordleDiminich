@@ -7,20 +7,29 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #f6f6f6; /* Colore di sfondo simile a Wordle */
+    background-color: #f6f6f6; 
 }
 
-/* Definizione del colore per la classe .green */
+
+header h1{
+    margin-top: 3vh;
+    font-size: 50px;
+}
 .green {
-    color: green;
+    background-color: green;
 }
 
-/* Definizione del colore per la classe .ocra */
 .ocra {
-    color: #c68e56; /* Questo è solo un esempio di un tono di colore ocra */
+    background-color: #c68e56;
+}
+
+.grey{
+    background-color: grey;
 }
 
 .content {
+    height: auto;
+    width: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -29,15 +38,13 @@ body {
 }
 
 .griglia-content {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px; /* Aggiungi margine superiore per spaziatura */
 }
 
-.input-field {
-    width: auto;
-}
+
 
 #griglia-griglia {
     display: flex;
@@ -49,33 +56,64 @@ body {
 .griglia-btn {
     display: flex;
     justify-content: center; /* Centra i bottoni nella griglia */
-    margin-top: 10px; /* Aggiungi margine superiore per spaziatura */
 }
 
 .riga {
+    margin-top: 2vh;
     display: flex;
-    justify-content: center; /* Centra gli input nella riga */
+    justify-content: center; 
     align-items: center;
-    margin-bottom: 10px; /* Aggiungi margine inferiore per spaziatura */
 }
 
 input {
-    width: 30px;
-    height: 40px; /* Aumenta l'altezza degli input */
+   
     margin-right: 5px;
     text-align: center;
-    border: 1px solid #ccc; /* Aggiungi bordo grigio agli input */
-    background-color: white; /* Sfondo bianco per gli input */
+    border: 1px solid #ccc; /* Bordo grigio */
+    background-color: white; /* Sfondo bianco */
 }
+
 
 .griglia-griglia div {
     display: flex;
     justify-content: center;
     align-items: center;
     border: 1px solid #ccc;
-    height: 40px; /* Aumenta l'altezza delle caselle della griglia */
-    width: 30px; /* Larghezza fissa per le caselle della griglia */
-    font-size: 16px; /* Riduci la dimensione del testo per adattarsi meglio */
-    margin: 2px; /* Aggiungi margine tra le caselle della griglia */
+ 
+    font-size: 20px; /* Riduci la dimensione del testo per adattarsi meglio */
+    margin: 1vw; /* Aggiungi margine tra le caselle della griglia */
     background-color: white; /* Sfondo bianco per le caselle della griglia */
 }
+
+
+.input-field{
+    width: 60px;
+    height: 60px;
+}
+
+/* =================================================================*/
+#wordUsed {
+    margin-top: 3vh;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+#wordUsed ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#wordUsed ul li {
+    display: inline-block;
+    margin-right: 5px;
+    background-color: grey;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 16px;
+}
+
