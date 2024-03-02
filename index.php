@@ -43,3 +43,4 @@
 
 <script src="resources/js/index.js"></script>
 <script src="resources/js/keyboard.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>

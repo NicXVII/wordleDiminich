@@ -11,7 +11,14 @@ document.addEventListener("DOMContentLoaded", function() {
 //------------------------------------------------------------------------------------------------------
 
 
-
+function newGame() {
+    paroleUsate = [];
+    lettereUsate = [];
+    lettereGiuste = [];
+    positions = [];
+    posCaratteri = [];
+ 
+}
 //------------------------------------------------------------------------------------------------------
 
 function fetchWord(id)
@@ -400,16 +407,16 @@ function addListenerInput(input, index) {
 
 function printColors(index) 
 {
-    console.log(positions);
-    console.log("Printing colors...");
+    /*console.log(positions);
+    console.log("Printing colors...");*/
     if(positions[index] === undefined)
         return;
 
 
     var pos = positions[index];
 
-    console.log("Pos"+pos);
-
+    //console.log("Pos"+pos);
+    var rightWord = true;
     for (var i = 0; i < 5; i++) {
         var input = document.getElementById(index + "" + i);
         
@@ -418,17 +425,74 @@ function printColors(index)
             console.log("Green");
             input.classList.add("green");
         } else {
+            rightWord = false;
             //console.log("Grey");
+
+            if(posCaratteri[index] === undefined)
+            {
+                input.classList.add("grey");
+                return;
+            }
+
+
             var temp = posCaratteri[index];
+
             if (typeof temp[i] === 'number' && temp[i] === 1)
                 input.classList.add("ocra");
             else
                 input.classList.add("grey");
         }
     }
+
+
+    if(rightWord)
+    {
+        popUp("Parola Indovinata","You won","success");
+        newGame();
+    }
+
+    
+}
+function popUp(title,text,icon) {
+    Swal.fire({
+        icon: icon,
+        title: title,
+        text: text,
+        allowOutsideClick: false,
+        allowEscapeKey: false, 
+        allowEnterKey: true, 
+        showConfirmButton: true,
+        confirmButtonText: 'Chiudi',
+        showCancelButton: false, 
+        showCloseButton: false
+    });
+
 }
 
 
+function fireArms() {
+    // Implement fireworks using jQuery
+        // Create a container for the fireworks
+        var container = $('<div>').addClass('fireworks-container');
+        $('body').append(container);
+
+        // Create multiple fireworks
+        for (var i = 0; i < 10; i++) {
+            var firework = $('<div>').addClass('firework');
+            container.append(firework);
+
+            // Randomly position the fireworks
+            var left = Math.random() * ($(window).width() - 100);
+            var top = Math.random() * ($(window).height() - 100);
+            firework.css({ left: left, top: top });
+
+            // Animate the fireworks
+            firework.animate({ top: 0 }, 1000, function() {
+                // Remove the fireworks after animation
+                $(this).remove();
+            });
+        }
+}
 /*
 function colorInputBasedOnLetter(input) {
     var letter = input.value;
