@@ -17,6 +17,7 @@ function newGame() {
     lettereGiuste = [];
     positions = [];
     posCaratteri = [];
+
  
 }
 //------------------------------------------------------------------------------------------------------
@@ -229,6 +230,7 @@ function fetchCaratteri(word,id) {
     .then(data => {
         if (data.success) {
             posCaratteri.push(data.data);
+            console.log("Caratteri " + posCaratteri);
             //console.log(data.data);
             /*if(data.data == 1)
             {
@@ -407,6 +409,17 @@ function addListenerInput(input, index) {
 
 function printColors(index) 
 {
+    console.log(index);
+    //console.log(posCaratteri);
+    for(var i=0;i<posCaratteri.length;i++)
+    {
+        if(i === index){
+            temp = posCaratteri[i];
+            console.log(posCaratteri[i]);
+            console.log(temp);
+        }
+
+    }
     /*console.log(positions);
     console.log("Printing colors...");*/
     if(positions[index] === undefined)
@@ -422,7 +435,7 @@ function printColors(index)
         
         // Check if pos[i] is defined and is equal to 1
         if (typeof pos[i] === 'number' && pos[i] === 1) {
-            console.log("Green");
+            //console.log("Green");
             input.classList.add("green");
         } else {
             rightWord = false;
@@ -431,16 +444,16 @@ function printColors(index)
             if(posCaratteri[index] === undefined)
             {
                 input.classList.add("grey");
-                return;
+            }else
+            {
+                console.log("True ");
+
+
+                if (typeof temp[i] === 'number' && temp[i] === 1)
+                    input.classList.add("ocra");
+                else
+                    input.classList.add("grey");
             }
-
-
-            var temp = posCaratteri[index];
-
-            if (typeof temp[i] === 'number' && temp[i] === 1)
-                input.classList.add("ocra");
-            else
-                input.classList.add("grey");
         }
     }
 
@@ -448,7 +461,6 @@ function printColors(index)
     if(rightWord)
     {
         popUp("Parola Indovinata","You won","success");
-        newGame();
     }
 
     
@@ -469,30 +481,6 @@ function popUp(title,text,icon) {
 
 }
 
-
-function fireArms() {
-    // Implement fireworks using jQuery
-        // Create a container for the fireworks
-        var container = $('<div>').addClass('fireworks-container');
-        $('body').append(container);
-
-        // Create multiple fireworks
-        for (var i = 0; i < 10; i++) {
-            var firework = $('<div>').addClass('firework');
-            container.append(firework);
-
-            // Randomly position the fireworks
-            var left = Math.random() * ($(window).width() - 100);
-            var top = Math.random() * ($(window).height() - 100);
-            firework.css({ left: left, top: top });
-
-            // Animate the fireworks
-            firework.animate({ top: 0 }, 1000, function() {
-                // Remove the fireworks after animation
-                $(this).remove();
-            });
-        }
-}
 /*
 function colorInputBasedOnLetter(input) {
     var letter = input.value;
@@ -509,7 +497,6 @@ function colorInputBasedOnLetter(input) {
     }
 }
 */
-
 
 
 
