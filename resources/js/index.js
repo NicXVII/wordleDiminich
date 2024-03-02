@@ -2,6 +2,7 @@ var paroleUsate = [];
 var lettereUsate = [];
 var lettereGiuste = [];
 var positions = [];
+var posCaratteri = [];
 document.addEventListener("DOMContentLoaded", function() {
     createGriglia();
     unsetReadOnly(0);
@@ -220,6 +221,7 @@ function fetchCaratteri(word,id) {
     })
     .then(data => {
         if (data.success) {
+            posCaratteri.push(data.data);
             //console.log(data.data);
             /*if(data.data == 1)
             {
@@ -367,10 +369,11 @@ function addListenerInput(input, index) {
     input.addEventListener('keyup', (event) => {
         var pos = parseInt(input.getAttribute('position'));
         
-        // Verifica se il tasto premuto è una lettera dell'alfabeto
         if (event.keyCode < 65 || event.keyCode > 90) 
+        {
+            input.value = '';
             return;
-
+        }
         //colorInputBasedOnLetter(input);
         if (pos < 4) { 
             var nextpost = pos + 1;
@@ -416,7 +419,11 @@ function printColors(index)
             input.classList.add("green");
         } else {
             //console.log("Grey");
-            input.classList.add("grey");
+            var temp = posCaratteri[index];
+            if (typeof temp[i] === 'number' && temp[i] === 1)
+                input.classList.add("ocra");
+            else
+                input.classList.add("grey");
         }
     }
 }

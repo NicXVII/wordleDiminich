@@ -21,10 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ];
     } else {*/
         //$word = "andrea";
+        $datas = confrontWord($word, $wordToFind);
         $result = [
             'success'    =>  true,
-            'data'   =>  10110,
-            'word' => $word,
+            'data'   =>   $datas,
+            /*'word' => $datas,*/
         ];
         //$query = "CALL testVocabolario('$word')";
         /*$statement = mysqli_prepare($db, $query);
@@ -60,5 +61,16 @@ echo json_encode($result);
 
 function confrontWord($word, $wordToFind)
 {
+    $wordPresents = array(); // Initialize an array to store the results
     
+    for ($i = 0; $i < strlen($word); $i++) {
+        // Check if the current character of $word is found in $wordToFind
+        if (strpos($wordToFind, $word[$i]) !== false) {
+            $wordPresents[] = 1;
+        } else {
+            $wordPresents[] = 0;
+        }
+    }
+    
+    return $wordPresents; // Return the array containing the results
 }
