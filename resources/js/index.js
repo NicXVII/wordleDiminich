@@ -242,11 +242,14 @@ function fetchCaratteri(word,id) {
 
 
 
-function fetchParola(word,id) {
+function fetchParola(word,index) {
+    //console.log("Index "+ index);
     const data = {
         word: word,
-        id  : id,
+        //id  : index,
     };
+    //console.log(data);
+
     fetch('function/testParola.php', {
         method: 'POST',
         headers: {
@@ -263,10 +266,11 @@ function fetchParola(word,id) {
     .then(data => {
         if (data.success) {
             console.log(data.positions);
-            positions.splice(0, positions.length);
+
             positions.push(data.positions);
             console.log("Lettere giuste:"+data.letters);
             addLettereGiuste(data.letters);
+            printColors(index);
             /*if(data.data == 1)
             {
 
@@ -376,9 +380,7 @@ function addListenerInput(input, index) {
                 nextInput.focus();
             }
         } else {
-            fetchWord(parseInt(index)).then(() => {
-                printColors(index);
-            });
+            fetchWord(parseInt(index))
             //printColors(index);
             //printLetereUsate();
             if(index < 5)
@@ -392,9 +394,10 @@ function addListenerInput(input, index) {
     });
 }
 
+
 function printColors(index) 
 {
-    
+    console.log(positions);
     console.log("Printing colors...");
     if(positions[index] === undefined)
         return;
