@@ -21,12 +21,24 @@
         <h1>Wordle</h1>
     </header>
     <div class="content">
+        <div class="caratteriUsati">
+            <h1>Caratteri Usati</h1>
+            <p></p>
+
+            <h2 id="caratteriUsatiValue">0</h2>
+        </div>
         <div class="griglia-content">
             <div class="griglia-griglia" id="griglia-griglia">
             
             </div>
 
-            </div>
+        </div>
+      
+        <div class="tentativiRimasti">
+            <h1>Tentativi Rimasti</h1>
+            <p></p>
+            <h2 id="tentativiRimastiValue">6</h2>
+
         </div>
     </div>
     <div class="wordUsed" id="wordUsed">

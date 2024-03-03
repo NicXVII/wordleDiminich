@@ -8,12 +8,19 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-size: cover;
   }
   
   header {
-    margin-top: 1vh;
+
+    margin-top: 0vh;
     font-size: 36px;
     color: #333; 
+  }
+
+  header img{
+    max-width: 250px;
+    max-height: 250px;
   }
 
 
@@ -30,19 +37,46 @@ body {
     color:  white;
 
     background-color: #c68e1e81; 
+}.content {
+  width: 100%;
+  height: auto; 
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /* Distribuisce gli elementi uniformemente lungo l'asse principale */
+  align-items: flex-start; 
+  margin: 0 auto; /* Per centrare il contenuto orizzontalmente */
+  margin-bottom: 5vh;
+  white-space: pre-line;
+  text-align: center;
 }
 
-  
-  .content {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    margin-bottom: 5vh;
-  }
-  
+.caratteriUsati,
+.tentativiRimasti {
+  white-space: pre-line;
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0;
+  margin-bottom: 3vh;
+}
+
+.griglia-content {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0;
+}
+
+/* Rimuovere i margini degli elementi figli se necessario */
+.content > * {
+  margin: 0;
+}
+
+
+
+
 
   
   input {
@@ -89,3 +123,21 @@ body {
     font-size: 25px;
   }
   
+
+  .reload-button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.reload-button:hover {
+    background-color: #45a049;
+}

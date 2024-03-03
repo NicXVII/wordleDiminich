@@ -88,13 +88,43 @@ function fetchAll(word, id) {
     ]).then(() => {
         printColors(id);
         workWithWords();
+        printCaratteriUsati();
+        printTentativiRimasti();
 
     }).catch(error => {
         console.error('Si è verificato un errore durante il recupero dei dati:', error);
     });
 }
 
+function printCaratteriUsati()
+{
+    var div = document.getElementById('caratteriUsatiValue');
 
+    div.textContent = lettereGiuste.length+lettereUsate.length;
+}
+
+function printTentativiRimasti() {
+    var div = document.getElementById('tentativiRimastiValue');
+
+    div.textContent = 6 - paroleUsate.length;
+
+    var tentativiRimasti = 6 - paroleUsate.length;
+
+    setColorBasedOnTentativiRimasti(div, tentativiRimasti);
+}
+
+function setColorBasedOnTentativiRimasti(div, tentativiRimasti) {
+    if(tentativiRimasti === 0)
+        return;
+    if (tentativiRimasti >= 4) {
+        div.style.color = 'green';
+    } else if (tentativiRimasti >= 2) {
+        div.style.color = 'orange';
+    } else {
+        popUp("Ultimo Tentativo", "Fai molta attenzione", "error");
+        div.style.color = 'red';
+    }
+}
 
 function workWithWords()
 {
@@ -452,18 +482,32 @@ function printColors(index)
     {
         popUp("Parola Indovinata","You won","success");
         setReadOnlyAll(index);
+        createBtnReload();
     } else
     {
         if(index === 5)
         {
             setReadOnlyAll(index);
             popUp("Parola non Indovinta", "Hai perso","error");
+            createBtnReload();
+
         }
     }
 
     
 }
 
+
+function createBtnReload() {
+    var div = document.body.querySelector('header');
+    var btn = document.createElement("button");
+    btn.textContent = "Rigioca!!!!!!!!";
+    btn.className = "reload-button"; 
+    div.appendChild(btn);
+    btn.addEventListener("click", function() {
+        location.reload();
+    });
+}
 
 function popUp(title,text,icon) {
     Swal.fire({
