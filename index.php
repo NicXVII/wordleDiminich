@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="wordUsed" id="wordUsed">
-        <h1>Lettere Usate</h1>
+        <h1>Non ci sono lettere</h1>
     </div>
     <?php
      //require_once('components/keyboard.php')

@@ -40,6 +40,7 @@ body {
     justify-content: center;
     align-items: center;
     margin-top: 20px;
+    margin-bottom: 5vh;
   }
   
 
@@ -59,7 +60,7 @@ body {
     
   
   #wordUsed {
-    margin-top: 3vh;
+    margin-top: 5vh;
     background-color: #fff;
     border: 1px solid #ccc;
     padding: 10px;
@@ -73,15 +74,18 @@ body {
     padding: 0;
     display: flex; /* Display used words horizontally */
     justify-content: center;
+    align-items: center;
   }
   
   #wordUsed ul li {
-    display: inline-block;
-    margin-right: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
     background-color: #ddd; /* Light gray for used words */
     color: #333;
     padding: 5px 10px;
     border-radius: 3px;
-    font-size: 16px;
+    font-size: 25px;
   }
   

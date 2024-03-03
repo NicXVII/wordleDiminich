@@ -61,11 +61,18 @@ function printLettereUsate() {
     var div = document.getElementById('wordUsed');
     div.innerHTML = '';
 
+    if(lettereUsate.length === 0)
+    {
+        var h1 = document.createElement('h1');
+        h1.innerHTML = 'Non ci sono lettere';
+        div.appendChild(h1);
+    }
     var ul = document.createElement('ul');
     ul.id = 'usedLettersList';
 
     for (var i = 0; i < lettereUsate.length; i++) {
         var li = document.createElement('li');
+        li.classList.add('dimension');
         li.textContent = lettereUsate[i];
         ul.appendChild(li);
     }
@@ -117,7 +124,7 @@ function removeLettereUSate() {
     for (var i = 0; i < lettereGiuste.length; i++) {
         var lettera = lettereGiuste[i];
         if (lettereUsate.includes(lettera)) {
-            console.log("removing "+ lettera);
+            //console.log("removing "+ lettera);
             var index = lettereUsate.indexOf(lettera);
             //console.log(lettera);
             if (index !== -1) {
@@ -188,10 +195,21 @@ function fetchVocabolario(word, id) {
 }
 
 //------------------------------------------------------------------------------------------------------
+
+function setReadOnlyAll(index)
+{
+    for(var i= index;i< 6;i++ )
+    {
+        //console.log("Set Read Only: "+ i);
+        setReadOnly(i);
+    }
+}
+
+
 function setReadOnly(id) {
 
 
-    for (var index = 0; index < 4; index++) {
+    for (var index = 0; index < 5; index++) {
         var input = document.getElementById(id + "" + index);
         if (input) {
             input.setAttribute('readonly', 'readonly');
@@ -200,7 +218,7 @@ function setReadOnly(id) {
 }
 
 function unsetReadOnly(id) {
-    for (var index = 0; index < 4; index++) {
+    for (var index = 0; index < 5; index++) {
         var input = document.getElementById(id + "" + index);
         if (input) {
             input.removeAttribute('readonly');
@@ -356,10 +374,16 @@ function createGriglia()
 }
 
 function addListenerInput(input, index) {
+    
     input.addEventListener('keyup', (event) => {
+        var readonly = input.getAttribute('readonly');
+        //console.log(readonly);
+        if(readonly)
+            return;
         var pos = parseInt(input.getAttribute('position'));
         if (event.keyCode < 65 || event.keyCode > 90) {
-            if (event.keyCode === 8) {
+            
+            if (event.keyCode === 8 && !readonly) {
                 if (pos !== 0) {
                     var nextpost = pos - 1;
                     var nextInput = document.getElementById(index + "" + nextpost);
@@ -427,14 +451,20 @@ function printColors(index)
     if(rightWord)
     {
         popUp("Parola Indovinata","You won","success");
+        setReadOnlyAll(index);
     } else
     {
         if(index === 5)
+        {
+            setReadOnlyAll(index);
             popUp("Parola non Indovinta", "Hai perso","error");
+        }
     }
 
     
 }
+
+
 function popUp(title,text,icon) {
     Swal.fire({
         icon: icon,
