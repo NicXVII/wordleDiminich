@@ -252,7 +252,6 @@ function fetchParola(word, index) {
     return new Promise((resolve, reject) => {
         const data = {
             word: word,
-            //id  : index,
         };
 
         fetch('function/testParola.php', {
@@ -272,15 +271,15 @@ function fetchParola(word, index) {
             if (data.success) {
                 positions.push(data.positions);
                 addLettereGiuste(data.letters);
-                resolve(data); // Risolve la Promise con i dati ottenuti
+                resolve(data);
             } else {
                 console.log('La richiesta non ha avuto successo');
-                reject('La richiesta non ha avuto successo'); // Reindirizza l'errore
+                reject('La richiesta non ha avuto successo'); 
             }
         })
         .catch(error => {
             console.error('Si è verificato un errore:', error);
-            reject(error); // Reindirizza l'errore
+            reject(error); 
         });
     });
 }
@@ -303,10 +302,8 @@ function fetchRandomId() {
     })
     .then(data => {
         if (data.success) {
-            //console.log(data.id);
         } else {
             console.log('La richiesta non ha avuto successo');
-            //popUp("Non sono stati trovati elementi");
         }
     })
     .catch(error => {
@@ -339,7 +336,6 @@ function createGriglia()
     for(var index=0;index < 6; index++)
     {
         var riga = document.createElement('div');
-        //colonna.classList.add('riga');
         riga.id = index + "riga";
         riga.classList.add('riga');
         for(var position=0; position<5; position++)
@@ -350,7 +346,6 @@ function createGriglia()
             input.classList.add('input-field');
             input.id = index + ""+ position;
             input.setAttribute('position', position);
-            //input.classList.add('inputElement');
             addListenerInput(input,index);
             riga.appendChild(input);
         }
@@ -359,33 +354,34 @@ function createGriglia()
 
     }
 }
+
 function addListenerInput(input, index) {
     input.addEventListener('keyup', (event) => {
         var pos = parseInt(input.getAttribute('position'));
-        
-        if (event.keyCode < 65 || event.keyCode > 90) 
-        {
+        if (event.keyCode < 65 || event.keyCode > 90) {
+            if (event.keyCode === 8) {
+                if (pos !== 0) {
+                    var nextpost = pos - 1;
+                    var nextInput = document.getElementById(index + "" + nextpost);
+                    input.value = '';
+                    nextInput.focus();
+                    return;
+                }
+            }
             input.value = '';
             return;
         }
-        //colorInputBasedOnLetter(input);
-        if (pos < 4) { 
+        if (pos < 4) {
             var nextpost = pos + 1;
-            var nextInput = document.getElementById(index + "" + nextpost); 
-            if (nextInput !== null) { 
-
+            var nextInput = document.getElementById(index + "" + nextpost);
+            if (nextInput !== null) {
                 nextInput.focus();
             }
         } else {
-            fetchWord(parseInt(index))
-            //printColors(index);
-            //printLetereUsate();
-            if(index < 5)
-            {
-
-            var nextInput = document.getElementById((parseInt(index) + 1) + "" + 0); 
-            
-            nextInput.focus();
+            fetchWord(parseInt(index));
+            if (index < 5) {
+                var nextInput = document.getElementById((parseInt(index) + 1) + "" + 0);
+                nextInput.focus();
             }
         }
     });
@@ -394,30 +390,22 @@ function addListenerInput(input, index) {
 
 function printColors(index) 
 {
-    //console.log(index);
-    //console.log(posCaratteri);
-   
-    /*console.log(positions);
-    console.log("Printing colors...");*/
+    
     if(positions[index] === undefined)
         return;
 
 
     var pos = positions[index];
 
-    //console.log("Pos"+pos);
 
     var rightWord = true;
     for (var i = 0; i < 5; i++) {
         var input = document.getElementById(index + "" + i);
         
-        // Check if pos[i] is defined and is equal to 1
         if (typeof pos[i] === 'number' && pos[i] === 1) {
-            //console.log("Green");
             input.classList.add("green");
         } else {
             rightWord = false;
-            //console.log("Grey");
 
             if(posCaratteri[index] === undefined)
             {
@@ -425,7 +413,6 @@ function printColors(index)
             }else
             {
                 var temp = posCaratteri[index];
-                //console.log("True ");
 
 
                 if (typeof temp[i] === 'number' && temp[i] === 1)
@@ -463,22 +450,5 @@ function popUp(title,text,icon) {
     });
 
 }
-
-/*
-function colorInputBasedOnLetter(input) {
-    var letter = input.value;
-    console.log("colorInputBasedOnLetter " +letter);
-
-    if (lettereUsate.includes(letter)) {
-        console.log("Lettere usate " + letter);
-        input.classList.add('grey');
-
-    }
-    if (lettereGiuste.includes(letter)) {
-        console.log("Lettere giuste " + letter);
-        input.classList.add('green');
-    }
-}
-*/
 
 
