@@ -73,21 +73,20 @@ function printLettereUsate() {
     div.appendChild(ul);
 }
 
-function fetchAll(word,id)
-{
-    /*console.log("Fetching all word");
-    console.log("Parole usate" + paroleUsate);
-    console.log("Lettere usate" + lettereUsate);
-    console.log("LEttere Giuste" + lettereGiuste);*/
+function fetchAll(word, id) {
+    Promise.all([
+        fetchVocabolario(word, id),
+        fetchParola(word, id),
+        fetchCaratteri(word, id)
+    ]).then(() => {
+        printColors(id);
+        workWithWords();
 
-
-    fetchVocabolario(word,id);
-    fetchParola(word,id);
-
-    fetchCaratteri(word,id);
-    workWithWords();
-
+    }).catch(error => {
+        console.error('Si è verificato un errore durante il recupero dei dati:', error);
+    });
 }
+
 
 
 function workWithWords()
@@ -149,43 +148,45 @@ function sort()
     lettereGiuste.sort();
 }
 
-function fetchVocabolario(word,id) {
-    const data = {
-        word: word,
-    };
-    fetch('function/testVocabolario.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data) 
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json(); 
-    })
-    .then(data => {
-        if (data.success) {
-            //console.log(data.data);
-            if(data.data == 1)
-            {
-                paroleUsate.push(data.word);
-                //console.log(paroleUsate); 
-                setReadOnly(id);
-                unsetReadOnly(id+1);               
+function fetchVocabolario(word, id) {
+    return new Promise((resolve, reject) => {
+        const data = {
+            word: word,
+        };
+
+        fetch('function/testVocabolario.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-            //populate(data.data);
-        } else {
-            console.log('La richiesta non ha avuto successo');
-            //popUp("Non sono stati trovati elementi");
-        }
-    })
-    .catch(error => {
-        console.error('Si è verificato un errore:', error);
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                if (data.data == 1) {
+                    paroleUsate.push(data.word);
+                    setReadOnly(id);
+                    unsetReadOnly(id + 1);
+                }
+                resolve(data); // Risolve la Promise con i dati ottenuti
+            } else {
+                console.log('La richiesta non ha avuto successo');
+                reject('La richiesta non ha avuto successo'); // Reindirizza l'errore
+            }
+        })
+        .catch(error => {
+            console.error('Si è verificato un errore:', error);
+            reject(error); // Reindirizza l'errore
+        });
     });
 }
+
 //------------------------------------------------------------------------------------------------------
 function setReadOnly(id) {
 
@@ -208,99 +209,82 @@ function unsetReadOnly(id) {
 }
 
 //------------------------------------------------------------------------------------------------------
+function fetchCaratteri(word, id) {
+    return new Promise((resolve, reject) => {
+        const data = {
+            word: word,
+            id: id,
+        };
 
-function fetchCaratteri(word,id) {
-    const data = {
-        word: word,
-        id  : id,
-    };
-    fetch('function/testCaratteri.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data) 
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json(); 
-    })
-    .then(data => {
-        if (data.success) {
-            posCaratteri.push(data.data);
-            workWithWords();
-            //console.log("Caratteri " + posCaratteri);
-            //console.log(data.data);
-            /*if(data.data == 1)
-            {
-
-                paroleUsate.push(data.word);
-                console.log(paroleUsate); 
-                setReadOnly(id);
-                unsetReadOnly(id+1);               
-            }*/
-            //populate(data.data);
-        } else {
-            console.log('La richiesta non ha avuto successo');
-            //popUp("Non sono stati trovati elementi");
-        }
-    })
-    .catch(error => {
-        console.error('Si è verificato un errore:', error);
+        fetch('function/testCaratteri.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                posCaratteri.push(data.data);
+                //workWithWords();
+                resolve(data); // Risolve la Promise con i dati ottenuti
+            } else {
+                console.log('La richiesta non ha avuto successo');
+                reject('La richiesta non ha avuto successo'); // Reindirizza l'errore
+            }
+        })
+        .catch(error => {
+            console.error('Si è verificato un errore:', error);
+            reject(error); // Reindirizza l'errore
+        });
     });
 }
 
 
 
-function fetchParola(word,index) {
-    //console.log("Index "+ index);
-    const data = {
-        word: word,
-        //id  : index,
-    };
-    //console.log(data);
+function fetchParola(word, index) {
+    return new Promise((resolve, reject) => {
+        const data = {
+            word: word,
+            //id  : index,
+        };
 
-    fetch('function/testParola.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data) 
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json(); 
-    })
-    .then(data => {
-        if (data.success) {
-            //console.log(data.positions);
-
-            positions.push(data.positions);
-            //console.log("Lettere giuste:"+data.letters);
-            addLettereGiuste(data.letters);
-            printColors(index);
-            /*if(data.data == 1)
-            {
-
-                paroleUsate.push(data.word);
-                console.log(paroleUsate); 
-                setReadOnly(id);
-                unsetReadOnly(id+1);               
-            }*/
-            //populate(data.data);
-        } else {
-            console.log('La richiesta non ha avuto successo');
-            //popUp("Non sono stati trovati elementi");
-        }
-    })
-    .catch(error => {
-        console.error('Si è verificato un errore:', error);
+        fetch('function/testParola.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                positions.push(data.positions);
+                addLettereGiuste(data.letters);
+                resolve(data); // Risolve la Promise con i dati ottenuti
+            } else {
+                console.log('La richiesta non ha avuto successo');
+                reject('La richiesta non ha avuto successo'); // Reindirizza l'errore
+            }
+        })
+        .catch(error => {
+            console.error('Si è verificato un errore:', error);
+            reject(error); // Reindirizza l'errore
+        });
     });
 }
+
 
 
 function fetchRandomId() {
@@ -410,17 +394,9 @@ function addListenerInput(input, index) {
 
 function printColors(index) 
 {
-    console.log(index);
+    //console.log(index);
     //console.log(posCaratteri);
-    for(var i=0;i<posCaratteri.length;i++)
-    {
-        if(i === index){
-            temp = posCaratteri[i];
-            /*console.log(posCaratteri[i]);
-            console.log(temp);*/
-        }
-
-    }
+   
     /*console.log(positions);
     console.log("Printing colors...");*/
     if(positions[index] === undefined)
@@ -430,6 +406,7 @@ function printColors(index)
     var pos = positions[index];
 
     //console.log("Pos"+pos);
+
     var rightWord = true;
     for (var i = 0; i < 5; i++) {
         var input = document.getElementById(index + "" + i);
@@ -447,6 +424,7 @@ function printColors(index)
                 input.classList.add("grey");
             }else
             {
+                var temp = posCaratteri[index];
                 //console.log("True ");
 
 
