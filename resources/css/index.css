@@ -18,15 +18,18 @@ body {
 
 
   .green{
-    color: green;
-    background-color: green;
+    color:  white;
+    background-color: rgba(47, 165, 47, 0.623);
   }
 
   .grey{
-    color: grey;
+    color:  white;
+    background-color: rgba(128, 128, 128, 0.473);
   }
   .ocra {
-    color: #c68e1e; 
+    color:  white;
+
+    background-color: #c68e1e81; 
 }
 
   
