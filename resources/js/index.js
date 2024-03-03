@@ -440,6 +440,10 @@ function printColors(index)
     if(rightWord)
     {
         popUp("Parola Indovinata","You won","success");
+    } else
+    {
+        if(index === 5)
+            popUp("Parola non Indovinta", "Hai perso","error");
     }
 
     
@@ -476,6 +480,5 @@ function colorInputBasedOnLetter(input) {
     }
 }
 */
-
 
 

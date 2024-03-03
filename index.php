@@ -28,12 +28,9 @@
 
             </div>
         </div>
-        <div class="words" id="words">
-
-        </div>
     </div>
     <div class="wordUsed" id="wordUsed">
-        
+        <h1>Lettere Usate</h1>
     </div>
     <?php
      //require_once('components/keyboard.php')
