@@ -8,7 +8,6 @@ $data = json_decode($json, true);
 
 
 if (isset($data['word'])) {
-    $data['word'] = "acqua";
     $db;
 
     if (!$db) {

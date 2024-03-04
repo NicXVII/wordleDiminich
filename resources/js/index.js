@@ -316,7 +316,9 @@ function fetchCaratteri(word, id) {
         })
         .then(data => {
             if (data.success) {
-                posCaratteri.push(data.data);
+                console.log(data.data.SequenzaRisultati);
+                posCaratteri.push(data.data.SequenzaRisultati);
+                //console.log(posCaratteri.length);
                 //workWithWords();
                 resolve(data); // Risolve la Promise con i dati ottenuti
             } else {
@@ -353,8 +355,10 @@ function fetchParola(word, index) {
             return response.json();
         })
         .then(data => {
+
             if (data.success) {
-                positions.push(data.positions);
+                console.log(data.data.SequenzaRisultati);
+                positions.push(data.data.SequenzaRisultati);
                 addLettereGiuste(data.letters);
                 resolve(data);
             } else {
