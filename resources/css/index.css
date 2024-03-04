@@ -14,7 +14,7 @@ body {
   header {
 
     margin-top: 0vh;
-    font-size: 36px;
+    font-size: 28px;
     color: #333; 
   }
 
@@ -45,7 +45,7 @@ body {
   justify-content: space-between; /* Distribuisce gli elementi uniformemente lungo l'asse principale */
   align-items: flex-start; 
   margin: 0 auto; /* Per centrare il contenuto orizzontalmente */
-  margin-bottom: 5vh;
+  margin-bottom: 2vh;
   white-space: pre-line;
   text-align: center;
 }
@@ -85,8 +85,8 @@ body {
     border: 1px solid #ccc;
     background-color: #fff;
     color: #333;
-    width: 60px; /* Increased width */
-    height: 60px; /* Increased height */
+    width: 40px; /* Increased width */
+    height: 40px; /* Increased height */
     font-size: 30px; /* Increased font size */
     border-radius: 4px;
   }

@@ -1,37 +1,48 @@
 <?php
 session_start();
-//require_once("database.php");
+require_once("database.php");
 
 $result = array(); 
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 
-header('Content-Type: application/json'); // Set the Content-Type header to JSON
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($data['word'])) {
-    /* $db;
+if (isset($data['word'])) {
+    $data['word'] = "acqua";
+    $db;
 
     if (!$db) {
         $result = [
             'success'    =>  false,
             'message'   =>  'Failed to connect to database',
         ];
-    } else {*/
-        //$word = "andrea";
-        //$word = "andrea"; // Assuming $word is defined elsewhere
-        $wordToSearch = $_SESSION['parolaDaCercare'];
+    } else {
+        $id = $_SESSION['id'];
         $word = $data['word'];
-        $positions = confrontWord($word, $wordToSearch);
-        $rightLetters = checkWordPresents($word, $positions);
+        $query = "CALL testParola (?, ?)";
+        $statement = mysqli_prepare($db, $query);
 
-        $result = [
-            'success'       =>  true,
-            'data'          =>   $result,
-            'letters'       => $rightLetters,
-            'positions'     => $positions
-        ];
-    /*}*/ // The commented else block seems unnecessary
+        if ($statement) {
+            mysqli_stmt_bind_param($statement, "is", $id, $word);
+            mysqli_stmt_execute($statement);
+            $queryResult = mysqli_stmt_get_result($statement);
+            mysqli_stmt_close($statement);
 
+            $data = mysqli_fetch_assoc($queryResult);
+
+            $result = [
+                'success'    =>  true,
+                'data'   =>  $data,
+            ];
+        } else {
+            $result = [
+                'success'    =>  false,
+                'message'   =>  'Query execution failed',
+            ];
+        }
+
+        mysqli_close($db);
+    }
 } else {
     $result = [
         'success'    =>  false,
@@ -40,35 +51,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($data['word'])) {
 }
 
 echo json_encode($result);
-
-function checkWordPresents($word, $positions)
-{
-    $wordPresents= array();
-
-    for($i = 0; $i < 5; $i++) 
-    {
-        if($positions[$i] == '1')
-        {
-            $wordPresents[] = $word[$i];
-        }
-    }
-    return $wordPresents;
-}
-
-
-function confrontWord($word, $wordToFind)
-{
-    $wordPresents = array();
-    for($i = 0; $i < 5; $i++)
-    {
-        if($word[$i] === $wordToFind[$i])
-        {
-            $wordPresents[] = 1;
-        }
-        else
-        {
-            $wordPresents[] = 0;
-        }
-    }
-    return $wordPresents;
-}

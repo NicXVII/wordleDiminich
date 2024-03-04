@@ -1,6 +1,6 @@
 <?php
 session_start();
-//require_once("database.php");
+require_once("database.php");
 
 $result = array(); 
 
@@ -10,56 +10,55 @@ header('Content-Type: application/json'); // Imposta l'header Content-Type a JSO
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
-    $numeroCasuale = rand(0, 192);
+    /*$numeroCasuale = rand(0, 192);
 
-   $_SESSION['parolaDaCercare'] = 'kanye';
+   $_SESSION['parolaDaCercare'] = 'kanye';*/
+
+
 
 
 
     //$_SESSION['word'] = $word;
     //echo $numeroCasuale;
 
-   /* $db;
+   $db;
 
     if (!$db) {
         $result = [
             'success'    =>  false,
             'message'   =>  'Failed to connect to database',
         ];
-    } else {*/
-        //$word = "andrea";
-        $_SESSION['id'] = $numeroCasuale;
-        $result = [
-            'success'    =>  true,
-            'id'   =>  $numeroCasuale,
-        ];
-        //$query = "CALL testVocabolario('$word')";
-        /*$statement = mysqli_prepare($db, $query);
+    } else {
+
+        $query = "CALL getIdAcqua()";
+        $statement = mysqli_prepare($db, $query);
 
 
         if ($statement) {
             mysqli_stmt_execute($statement);
             $data = mysqli_stmt_get_result($statement);
+            $id = mysqli_fetch_assoc($data);
             mysqli_stmt_close($statement);
+            $_SESSION['id'] = $id;
 
             $result = [
                 'success'    =>  true,
-                'data'   =>  $data,
+                'data'   =>  $id,
             ];
         } else {
             $result = [
                 'success'    =>  false,
                 'message'   =>  'Query execution failed',
             ];
-        }*/
+        }
 
-        //mysqli_close($db);
     }
-/*}*/ else {
+} else
+{
     $result = [
         'success'    =>  false,
-        'message'   =>  'Word not provided',
+        'message'   =>  'Non puoi accedere a questa pagina direttamente.',
     ];
 }
-
 echo json_encode($result);
+

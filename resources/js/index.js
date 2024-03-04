@@ -80,21 +80,34 @@ function printLettereUsate() {
     div.appendChild(ul);
 }
 
-function fetchAll(word, id) {
-    Promise.all([
-        fetchVocabolario(word, id),
-        fetchParola(word, id),
-        fetchCaratteri(word, id)
-    ]).then(() => {
-        printColors(id);
-        workWithWords();
-        printCaratteriUsati();
-        printTentativiRimasti();
+var sucessoVocabolario = true;
 
-    }).catch(error => {
+async function fetchAll(word, id) {
+    try {
+        await fetchVocabolario(word, id);
+
+        if (sucessoVocabolario === true) {
+            let promises = [
+                fetchParola(word, id),
+                fetchCaratteri(word, id)
+            ];
+
+            await Promise.all(promises);
+
+            printColors(id);
+            workWithWords();
+            printCaratteriUsati();
+            printTentativiRimasti();
+        } else {
+            console.log('sucessoVocabolario is false.');
+        }
+    } catch (error) {
         console.error('Si è verificato un errore durante il recupero dei dati:', error);
-    });
+    }
 }
+
+
+
 
 function printCaratteriUsati()
 {
@@ -206,11 +219,23 @@ function fetchVocabolario(word, id) {
         })
         .then(data => {
             if (data.success) {
-                if (data.data == 1) {
+                var check = data.data[0];
+                if(check === undefined)
+                    check = data.data[1];
+
+
+                if (check === 1) {
+                    sucessoVocabolario = true;
                     paroleUsate.push(data.word);
                     setReadOnly(id);
                     unsetReadOnly(id + 1);
+                }else
+                {   
+                    //unsetReadOnly(id);
+                    sucessoVocabolario = false;
+                    removeInput(id);
                 }
+                console.log(sucessoVocabolario);
                 resolve(data); // Risolve la Promise con i dati ottenuti
             } else {
                 console.log('La richiesta non ha avuto successo');
@@ -222,6 +247,18 @@ function fetchVocabolario(word, id) {
             reject(error); // Reindirizza l'errore
         });
     });
+}
+
+
+function removeInput(id)
+{
+    for(var i = 0; i< 5; i++)
+    {
+        var input = document.getElementById(id+""+i);
+        input.value = '';
+    }
+    var input1 = document.getElementById(id+""+0);
+    input1.focus();
 }
 
 //------------------------------------------------------------------------------------------------------
@@ -350,6 +387,7 @@ function fetchRandomId() {
     })
     .then(data => {
         if (data.success) {
+            console.log(data.data);
         } else {
             console.log('La richiesta non ha avuto successo');
         }
