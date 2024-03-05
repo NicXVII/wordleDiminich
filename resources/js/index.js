@@ -449,7 +449,7 @@ function createGriglia()
 
 function addListenerInput(input, index) {
     
-    input.addEventListener('keyu p', (event) => {
+    input.addEventListener('keyup', (event) => {
         var readonly = input.getAttribute('readonly');
         //console.log(readonly);
         if(readonly)
