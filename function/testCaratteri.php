@@ -7,7 +7,8 @@ $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 
 
-if (isset($data['word'])) {
+if (true) {
+    $word = 'ACQUA'; 
     $db;
 
     if (!$db) {
@@ -16,8 +17,8 @@ if (isset($data['word'])) {
             'message'   =>  'Failed to connect to database',
         ];
     } else {
-        $id = $_SESSION['id'];
-        $word = $data['word'];
+        $id = intval($_SESSION['id']);
+        //$word = $data['word'];
         $query = "CALL testCarattere (?, ?)";
         $statement = mysqli_prepare($db, $query);
 
@@ -27,11 +28,16 @@ if (isset($data['word'])) {
             $queryResult = mysqli_stmt_get_result($statement);
             mysqli_stmt_close($statement);
 
-            $data = mysqli_fetch_assoc($queryResult);
+            $data = mysqli_fetch_array($queryResult);
 
+            $query = "CALL testCarattere ($id, 'acqua')";
+            $res = mysqli_query($db, $query);
+            $data = mysqli_fetch_array($res);
+            
             $result = [
+                'id' => $id,
                 'success'    =>  true,
-                'data'   =>  $data,
+                'data'   =>  $data[0],
             ];
         } else {
             $result = [

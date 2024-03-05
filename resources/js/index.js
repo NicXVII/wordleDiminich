@@ -235,7 +235,7 @@ function fetchVocabolario(word, id) {
                     sucessoVocabolario = false;
                     removeInput(id);
                 }
-                console.log(sucessoVocabolario);
+                //console.log(sucessoVocabolario);
                 resolve(data); // Risolve la Promise con i dati ottenuti
             } else {
                 console.log('La richiesta non ha avuto successo');
@@ -316,8 +316,10 @@ function fetchCaratteri(word, id) {
         })
         .then(data => {
             if (data.success) {
-                console.log(data.data.SequenzaRisultati);
-                posCaratteri.push(data.data.SequenzaRisultati);
+                //console.log(data.data);
+
+                posCaratteri.push(data.data);
+                //console.log(posCaratteri);
                 //console.log(posCaratteri.length);
                 //workWithWords();
                 resolve(data); // Risolve la Promise con i dati ottenuti
@@ -357,8 +359,9 @@ function fetchParola(word, index) {
         .then(data => {
 
             if (data.success) {
-                console.log(data.data.SequenzaRisultati);
-                positions.push(data.data.SequenzaRisultati);
+                //console.log(data.data);
+                positions.push(data.data);
+                //console.log(positions);
                 addLettereGiuste(data.letters);
                 resolve(data);
             } else {
@@ -441,13 +444,12 @@ function createGriglia()
         }
         div.appendChild(riga);
         setReadOnly(index);
-
     }
 }
 
 function addListenerInput(input, index) {
     
-    input.addEventListener('keyup', (event) => {
+    input.addEventListener('keyu p', (event) => {
         var readonly = input.getAttribute('readonly');
         //console.log(readonly);
         if(readonly)
@@ -467,6 +469,7 @@ function addListenerInput(input, index) {
             input.value = '';
             return;
         }
+        input.value = input.value.toUpperCase();
         if (pos < 4) {
             var nextpost = pos + 1;
             var nextInput = document.getElementById(index + "" + nextpost);
@@ -486,19 +489,20 @@ function addListenerInput(input, index) {
 
 function printColors(index) 
 {
-    
+   //console.log("Positions " + positions[index] );
     if(positions[index] === undefined)
         return;
 
 
     var pos = positions[index];
-
+    //console.log("Test arancio "+ pos);
 
     var rightWord = true;
     for (var i = 0; i < 5; i++) {
         var input = document.getElementById(index + "" + i);
-        
-        if (typeof pos[i] === 'number' && pos[i] === 1) {
+        //console.log("pos: "+ pos[i]);
+        if (pos[i] == 1) {
+            //console.log("Green");
             input.classList.add("green");
         } else {
             rightWord = false;
@@ -511,7 +515,7 @@ function printColors(index)
                 var temp = posCaratteri[index];
 
 
-                if (typeof temp[i] === 'number' && temp[i] === 1)
+                if (temp[i] == 1)
                     input.classList.add("ocra");
                 else
                     input.classList.add("grey");

@@ -29,8 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $data = mysqli_fetch_assoc($queryResult);
 
                 $result = [
-                    'success'    =>  true,
-                    'data'   =>  $data,
+                    'success'       =>  true,
+                    'data'          =>  $data,
+                    'word'          =>  $word,
                 ];
             } else {
                 $result = [

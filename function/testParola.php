@@ -7,8 +7,7 @@ $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 
 
-if (true) {
-    $data['word'] = "acqua";
+if (isset($data['word'])) {
     $db;
 
     if (!$db) {
@@ -32,7 +31,7 @@ if (true) {
 
             $result = [
                 'success'    =>  true,
-                'data'   =>  $data,
+                'data'   =>  $data['SequenzaRisultati'],
                 'letters' => confrontoLettere($data[0], $word),
             ];
         } else {
@@ -56,12 +55,12 @@ echo json_encode($result);
 
 function confrontoLettere($sequenza, $parola)
 {
-    $letters = null;
+    $letters = "";
     
     for ($i = 0; $i < 5; $i++) {
          if($sequenza[$i] == 1)
             {
-                $letters += $parola[$i];
+                $letters .= $parola[$i];
             }
     }
 

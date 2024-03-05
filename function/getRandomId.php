@@ -4,24 +4,11 @@ require_once("database.php");
 
 $result = array(); 
 
-
-header('Content-Type: application/json'); // Imposta l'header Content-Type a JSON
+header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-
-    /*$numeroCasuale = rand(0, 192);
-
-   $_SESSION['parolaDaCercare'] = 'kanye';*/
-
-
-
-
-
-    //$_SESSION['word'] = $word;
-    //echo $numeroCasuale;
-
-   $db;
+    $db;
 
     if (!$db) {
         $result = [
@@ -29,21 +16,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'message'   =>  'Failed to connect to database',
         ];
     } else {
-
-        $query = "CALL getIdAcqua()";
+        $query = "CALL getIdRandom()";
         $statement = mysqli_prepare($db, $query);
-
 
         if ($statement) {
             mysqli_stmt_execute($statement);
             $data = mysqli_stmt_get_result($statement);
             $id = mysqli_fetch_assoc($data);
             mysqli_stmt_close($statement);
-            $_SESSION['id'] = $id;
+            $_SESSION['id'] = $id['idParola'];
+            $idValue = $id['idParola'];
 
             $result = [
                 'success'    =>  true,
-                'data'   =>  $id,
+                'data'   =>  $idValue,
             ];
         } else {
             $result = [
@@ -52,13 +38,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ];
         }
 
+        mysqli_close($db); // Close the database connection
     }
-} else
-{
+} else {
     $result = [
         'success'    =>  false,
         'message'   =>  'Non puoi accedere a questa pagina direttamente.',
     ];
 }
-echo json_encode($result);
 
+echo json_encode($result);
