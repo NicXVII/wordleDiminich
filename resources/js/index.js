@@ -123,6 +123,9 @@ function printTentativiRimasti() {
 
     var tentativiRimasti = 6 - paroleUsate.length;
 
+    if(tentativiRimasti <= 3)
+        div.classList.add('blinking');
+
     setColorBasedOnTentativiRimasti(div, tentativiRimasti);
 }
 
@@ -528,14 +531,14 @@ function printColors(index)
     {
         popUp("Parola Indovinata","You won","success");
         setReadOnlyAll(index);
-        createBtnReload();
+        //createBtnReload();
     } else
     {
         if(index === 5)
         {
             setReadOnlyAll(index);
             popUp("Parola non Indovinta", "Hai perso","error");
-            createBtnReload();
+            //createBtnReload();
 
         }
     }

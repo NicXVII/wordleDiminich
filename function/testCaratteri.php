@@ -7,8 +7,7 @@ $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 
 
-if (true) {
-    $word = 'ACQUA'; 
+if (isset($data['word'])) {
     $db;
 
     if (!$db) {
@@ -18,7 +17,7 @@ if (true) {
         ];
     } else {
         $id = intval($_SESSION['id']);
-        //$word = $data['word'];
+        $word = $data['word'];
         $query = "CALL testCarattere (?, ?)";
         $statement = mysqli_prepare($db, $query);
 
@@ -30,9 +29,9 @@ if (true) {
 
             $data = mysqli_fetch_array($queryResult);
 
-            $query = "CALL testCarattere ($id, 'acqua')";
+           /* $query = "CALL testCarattere ($id, 'acqua')";
             $res = mysqli_query($db, $query);
-            $data = mysqli_fetch_array($res);
+            $data = mysqli_fetch_array($res);*/
             
             $result = [
                 'id' => $id,

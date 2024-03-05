@@ -21,7 +21,7 @@
         <h1>Wordle</h1>
     </header>
     <div class="content">
-        <div class="caratteriUsati">
+        <div class="caratteriUsati status zoom">
             <h1>Caratteri Usati</h1>
             <p></p>
 
@@ -34,7 +34,7 @@
 
         </div>
       
-        <div class="tentativiRimasti">
+        <div class="tentativiRimasti status zoom">
             <h1>Tentativi Rimasti</h1>
             <p></p>
             <h2 id="tentativiRimastiValue">6</h2>
