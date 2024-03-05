@@ -99,7 +99,7 @@ async function fetchAll(word, id) {
             printCaratteriUsati();
             printTentativiRimasti();
         } else {
-            console.log('sucessoVocabolario is false.');
+            //console.log('sucessoVocabolario is false.');
         }
     } catch (error) {
         console.error('Si è verificato un errore durante il recupero dei dati:', error);
@@ -137,7 +137,10 @@ function setColorBasedOnTentativiRimasti(div, tentativiRimasti) {
     } else if (tentativiRimasti >= 2) {
         div.style.color = 'orange';
     } else {
-        popUp("Ultimo Tentativo", "Fai molta attenzione", "error");
+        if(!rightWord)
+            popUp("Ultimo Tentativo", "Fai molta attenzione", "error");
+
+
         div.style.color = 'red';
     }
 }
@@ -397,7 +400,7 @@ function fetchRandomId() {
     })
     .then(data => {
         if (data.success) {
-            console.log(data.data);
+            //console.log(data.data);
         } else {
             console.log('La richiesta non ha avuto successo');
         }
@@ -489,6 +492,7 @@ function addListenerInput(input, index) {
     });
 }
 
+var rightWord = null;
 
 function printColors(index) 
 {
@@ -499,8 +503,7 @@ function printColors(index)
 
     var pos = positions[index];
     //console.log("Test arancio "+ pos);
-
-    var rightWord = true;
+    rightWord = true;
     for (var i = 0; i < 5; i++) {
         var input = document.getElementById(index + "" + i);
         //console.log("pos: "+ pos[i]);
@@ -526,21 +529,24 @@ function printColors(index)
         }
     }
 
-
+    //console.log(rightWord + " index: "+ index);
     if(rightWord)
     {
         popUp("Parola Indovinata","You won","success");
-        setReadOnlyAll(index);
-        //createBtnReload();
-    } else
-    {
-        if(index === 5)
-        {
-            setReadOnlyAll(index);
-            popUp("Parola non Indovinta", "Hai perso","error");
-            //createBtnReload();
 
-        }
+        //console.log("right word");
+        setReadOnlyAll(index);
+        return;
+        //createBtnReload();
+    } 
+    if(index === 5)
+    {
+        //console.log("wrong word");
+
+        setReadOnlyAll(index);
+        popUp("Parola non Indovinta", "Hai perso","error");
+        //createBtnReload();
+
     }
 
     
