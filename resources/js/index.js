@@ -579,9 +579,10 @@ function printColors(index)
 
 function addEffect(index)
 {
-    for(var i = 0; i< 6; i++)
+    for(var i = 0; i< 5; i++)
     {
         var input = document.getElementById(index+""+i);
+        //console.log(input);
         input.classList.add('correctWord');
     }
 }
