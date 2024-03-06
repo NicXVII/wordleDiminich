@@ -73,8 +73,25 @@ input {
   border-radius: 4px;
 }
 
-  
+.correct {
+  animation: highlight 2s ease;
+}
 
+@keyframes highlight {
+  0% {
+    background-color: #fff;
+  }
+  50% {
+    background-color: rgb(41, 158, 129);
+  }
+  100% {
+    background-color:  rgba(47, 165, 47, 0.623);
+  }
+}
+  
+.riga{
+  text-transform: uppercase;
+}
 #wordUsed {
   margin-top: 5vh;
   background-color: #fff;
@@ -107,23 +124,26 @@ input {
 
 
 .reload-button {
-  background-color: #4CAF50;
+  margin-top: 0.5vh;
+  width: auto;
+  height: 50px;
+  background-color: grey;
   border: none;
   color: white;
-  padding: 20px 40px; /* Increased size for better visibility */
+  padding: 20px 40px; 
   text-align: center;
   text-decoration: none;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 16px;
-  margin: 10px auto; /* Centered horizontally with some margin */
+  margin: 10px auto; 
   cursor: pointer;
   border-radius: 8px;
 }
 
 .reload-button:hover {
-  background-color: #45a049; /* Adjust hover color if needed */
+  background-color: #848a85; 
 }
 
 
@@ -155,12 +175,66 @@ input {
 
 
 @keyframes zoom {
-  /*0% { transform: scale(0.6); } /* Dimensione normale all'inizio */
-  0% { transform: scale(0.6); } /* Zoom al 80% a 1/4 dell'animazione */
-  50% { transform: scale(0.8); } /* Zoom al 120% a metà dell'animazione */
-  100% { transform: scale(1); } /* Ritorno alla dimensione normale alla fine */
+  0% { transform: scale(0.6); }
+  50% { transform: scale(0.8); } 
+  100% { transform: scale(1); } 
 }
 
 .zoom {
-  animation: zoom 5s infinite alternate; /* Applica l'animazione di zoom in modo alternato e infinito */
+  animation: zoom 5s infinite alternate;
+}
+
+
+
+@keyframes rotate360 {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(90deg); 
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  75% {
+    transform: rotate(270deg); 
+  }
+  100% {
+    transform: rotate(360deg); 
+  }
+}
+
+.rotate {
+  animation: rotate360 5s linear infinite;
+}
+
+
+
+.shake {
+  animation: shake 1.5s ease-in-out;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+
+.correctWord {
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: rgb(41, 158, 129);
+  }
+  100% {
+    background-color: rgba(47, 165, 47, 0.623);
+  }
 }

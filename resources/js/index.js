@@ -400,7 +400,7 @@ function fetchRandomId() {
     })
     .then(data => {
         if (data.success) {
-            //console.log(data.data);
+            console.log(data.data);
         } else {
             console.log('La richiesta non ha avuto successo');
         }
@@ -443,6 +443,7 @@ function createGriglia()
             input.type = 'text';
             input.maxLength = 1;
             input.classList.add('input-field');
+            input.classList.add('riga');
             input.id = index + ""+ position;
             input.setAttribute('position', position);
             addListenerInput(input,index);
@@ -451,46 +452,56 @@ function createGriglia()
         div.appendChild(riga);
         setReadOnly(index);
     }
+    var input = document.getElementById(0+""+0);
+    input.focus();
 }
+
 
 function addListenerInput(input, index) {
     
-    input.addEventListener('keyup', (event) => {
+    input.addEventListener('keydown', (event) => {
         var readonly = input.getAttribute('readonly');
         //console.log(readonly);
+        //console.log(event.keyCode);
+        
         if(readonly)
             return;
         var pos = parseInt(input.getAttribute('position'));
-        if (event.keyCode < 65 || event.keyCode > 90) {
+        //console.log("Position "+pos);
+        setTimeout(()=>{
+            if (event.keyCode < 65 || event.keyCode > 90) {
             
-            if (event.keyCode === 8 && !readonly) {
-                if (pos !== 0) {
-                    var nextpost = pos - 1;
-                    var nextInput = document.getElementById(index + "" + nextpost);
-                    input.value = '';
+                if (event.keyCode === 8 && !readonly) {
+                    if (pos !== 0) {
+                        var nextpost = pos - 1;
+                        var nextInput = document.getElementById(index + "" + nextpost);
+                        input.value = '';
+                        nextInput.focus();
+                        return;
+                    }
+                }
+                input.value = '';
+                return;
+            }
+            if (pos < 4) {
+                var nextpost = pos + 1;
+                var nextInput = document.getElementById(index + "" + nextpost);
+                if (nextInput !== null) {
                     nextInput.focus();
-                    return;
+                }
+            } else {
+                fetchWord(parseInt(index));
+                if (index < 5) {
+                    var nextInput = document.getElementById((parseInt(index) + 1) + "" + 0);
+                    nextInput.focus();
                 }
             }
-            input.value = '';
-            return;
-        }
-        input.value = input.value.toUpperCase();
-        if (pos < 4) {
-            var nextpost = pos + 1;
-            var nextInput = document.getElementById(index + "" + nextpost);
-            if (nextInput !== null) {
-                nextInput.focus();
-            }
-        } else {
-            fetchWord(parseInt(index));
-            if (index < 5) {
-                var nextInput = document.getElementById((parseInt(index) + 1) + "" + 0);
-                nextInput.focus();
-            }
-        }
+        },);
+
+
     });
 }
+
 
 var rightWord = null;
 
@@ -504,18 +515,22 @@ function printColors(index)
     var pos = positions[index];
     //console.log("Test arancio "+ pos);
     rightWord = true;
+    var grey = 0;
     for (var i = 0; i < 5; i++) {
         var input = document.getElementById(index + "" + i);
         //console.log("pos: "+ pos[i]);
         if (pos[i] == 1) {
             //console.log("Green");
             input.classList.add("green");
+            input.classList.add('correct');
+            //input.classList.add('rotated');
         } else {
             rightWord = false;
 
             if(posCaratteri[index] === undefined)
             {
                 input.classList.add("grey");
+                grey++;
             }else
             {
                 var temp = posCaratteri[index];
@@ -524,32 +539,51 @@ function printColors(index)
                 if (temp[i] == 1)
                     input.classList.add("ocra");
                 else
+                {
                     input.classList.add("grey");
+                    grey++;
+                }
             }
         }
     }
+    var riga = document.getElementById(index + "riga");
+
+    if(grey === 5)
+    {
+        riga.classList.add('shake');
+    }
+
 
     //console.log(rightWord + " index: "+ index);
     if(rightWord)
     {
+        addEffect(index);
+        //riga.classList.add('correctWord');
         popUp("Parola Indovinata","You won","success");
-
+        createBtnReload();
         //console.log("right word");
         setReadOnlyAll(index);
         return;
-        //createBtnReload();
     } 
     if(index === 5)
     {
         //console.log("wrong word");
-
         setReadOnlyAll(index);
         popUp("Parola non Indovinta", "Hai perso","error");
-        //createBtnReload();
+        createBtnReload();
 
     }
 
     
+}
+
+function addEffect(index)
+{
+    for(var i = 0; i< 6; i++)
+    {
+        var input = document.getElementById(index+""+i);
+        input.classList.add('correctWord');
+    }
 }
 
 
